@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2026-05-18 东方财富真实数据看盘教学讲义</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9e2ef;
+      --paper: #ffffff;
+      --soft: #f6f8fb;
+      --blue-soft: #eef6ff;
+      --green-soft: #ecfdf5;
+      --red-soft: #fff1f2;
+      --amber-soft: #fff7ed;
+      --brand: #0f766e;
+      --brand-dark: #115e59;
+      --blue: #1d4ed8;
+      --red: #be123c;
+      --amber: #9a3412;
+      --shadow: 0 18px 50px rgba(23, 32, 51, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: #e8eef3;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Segoe UI", sans-serif;
+      line-height: 1.68;
+    }
+
+    a {
+      color: var(--brand-dark);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(15, 118, 110, 0.28);
+    }
+
+    a:hover {
+      border-bottom-color: var(--brand);
+    }
+
+    .page {
+      max-width: 1180px;
+      min-height: calc(100vh - 64px);
+      margin: 32px auto;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 286px minmax(0, 1fr);
+    }
+
+    aside {
+      background: #102a2a;
+      color: #e9f7f5;
+      padding: 28px 24px;
+      position: sticky;
+      top: 0;
+      align-self: start;
+      min-height: 100vh;
+    }
+
+    aside h1 {
+      margin: 0 0 12px;
+      font-size: 23px;
+      line-height: 1.28;
+      letter-spacing: 0;
+    }
+
+    aside p {
+      color: #b8d7d2;
+      font-size: 13px;
+      margin: 0 0 22px;
+    }
+
+    aside a {
+      color: #e9f7f5;
+      border-bottom: 0;
+    }
+
+    aside ol {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    aside li {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    .nav-title {
+      color: #8ebcb6;
+      font-size: 12px;
+      font-weight: 800;
+      margin: 22px 0 8px;
+      text-transform: uppercase;
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #e9f7f5;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 12px;
+      margin: 2px 4px 2px 0;
+    }
+
+    main {
+      padding: 36px 46px 54px;
+      min-width: 0;
+    }
+
+    .cover {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 28px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      color: var(--brand-dark);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .cover h2 {
+      font-size: 36px;
+      line-height: 1.18;
+      margin: 0 0 12px;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      font-size: 18px;
+      color: #344054;
+      max-width: 820px;
+      margin: 0 0 18px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .meta {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 13px;
+      color: #344054;
+    }
+
+    section {
+      margin: 34px 0;
+    }
+
+    h2 {
+      font-size: 25px;
+      line-height: 1.28;
+      margin: 0 0 14px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin: 22px 0 10px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 9px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 10px 11px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: #f0f5f6;
+      color: #24333f;
+      font-weight: 800;
+    }
+
+    tbody tr:nth-child(even) td {
+      background: #fbfcfd;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 16px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .callout {
+      border-left: 4px solid var(--brand);
+      background: #edf7f5;
+      padding: 14px 16px;
+      margin: 16px 0;
+    }
+
+    .blue {
+      border-left-color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .amber {
+      border-left-color: var(--amber);
+      background: var(--amber-soft);
+    }
+
+    .red {
+      border-left-color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .formula {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      background: #111827;
+      color: #e5e7eb;
+      border-radius: 8px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 14px 0;
+      white-space: pre-wrap;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .pill {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 13px;
+      color: #344054;
+    }
+
+    .up {
+      color: #b42318;
+      font-weight: 800;
+    }
+
+    .down {
+      color: #027a48;
+      font-weight: 800;
+    }
+
+    .neutral {
+      color: #475467;
+      font-weight: 800;
+    }
+
+    .lesson {
+      border-top: 3px solid var(--brand);
+      padding-top: 18px;
+      break-inside: avoid;
+    }
+
+    .lesson-head {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .lesson-no {
+      color: var(--brand-dark);
+      font-weight: 900;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .lesson h3 {
+      margin: 0;
+      font-size: 21px;
+    }
+
+    .task-list {
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .task-list li {
+      position: relative;
+      padding-left: 29px;
+      margin: 8px 0;
+    }
+
+    .task-list li::before {
+      content: "";
+      width: 15px;
+      height: 15px;
+      border: 1.8px solid var(--brand);
+      border-radius: 4px;
+      position: absolute;
+      left: 0;
+      top: 6px;
+      background: #fff;
+    }
+
+    .template {
+      background: #fbfcfd;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      margin: 14px 0;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 40px;
+      padding-top: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+        margin: 0;
+      }
+
+      aside {
+        position: static;
+        min-height: auto;
+      }
+
+      main {
+        padding: 28px 22px 40px;
+      }
+
+      .cover h2 {
+        font-size: 30px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        display: block;
+        box-shadow: none;
+        max-width: none;
+        margin: 0;
+      }
+
+      aside {
+        position: static;
+        min-height: auto;
+        color: var(--ink);
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        padding: 20px 0;
+      }
+
+      aside a,
+      aside p,
+      .nav-title,
+      .badge {
+        color: var(--ink);
+        border-color: var(--line);
+      }
+
+      main {
+        padding: 0;
+      }
+
+      section,
+      .lesson {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside>
+      <h1>今日真实数据看盘教学</h1>
+      <p>用 2026-05-18 东方财富数据，按“指数 → 广度 → 成交额 → 板块 → 个股 → 复盘”的顺序做一次完整演练。</p>
+      <span class="badge">实盘案例</span>
+      <span class="badge">2026-05-18</span>
+      <span class="badge">东方财富数据</span>
+
+      <div class="nav-title">目录</div>
+      <ol>
+        <li><a href="#snapshot">今日数据快照</a></li>
+        <li><a href="#order">本节看盘顺序</a></li>
+        <li><a href="#indices">第一步：看指数</a></li>
+        <li><a href="#breadth">第二步：看涨跌家数</a></li>
+        <li><a href="#turnover">第三步：看成交额</a></li>
+        <li><a href="#sectors">第四步：看板块</a></li>
+        <li><a href="#stocks">第五步：看个股线索</a></li>
+        <li><a href="#summary">今日复盘示范</a></li>
+        <li><a href="#homework">课后作业</a></li>
+        <li><a href="#sources">数据来源</a></li>
+      </ol>
+    </aside>
+
+    <main>
+      <div class="cover">
+        <div class="eyebrow">Daily Case Study</div>
+        <h2>2026-05-18 东方财富真实数据看盘教学讲义</h2>
+        <p class="lead">这份讲义不是泛泛讲概念，而是把 2026 年 5 月 18 日 A 股真实盘面当作案例，带你照着东方财富的看盘顺序一步步读懂市场。</p>
+        <div class="meta-row">
+          <div class="meta">日期：2026-05-18，周一</div>
+          <div class="meta">市场：A股，收盘后复盘</div>
+          <div class="meta">核心结论：指数小跌，成交缩量，涨少跌多，科技/存储/元件局部活跃</div>
+          <div class="meta">注意：仅教学使用，不构成投资建议</div>
+        </div>
+      </div>
+
+      <section id="snapshot">
+        <h2>一、今日数据快照</h2>
+        <p>先把盘面压缩成一张表。你以后每天复盘，也可以先做这样一张“事实表”。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>今日数据</th>
+              <th>新手解读</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>上证指数</td>
+              <td>4131.53 点，<span class="down">-0.09%</span></td>
+              <td>主板轻微下跌，不是恐慌下跌。</td>
+            </tr>
+            <tr>
+              <td>深证成指</td>
+              <td>15530.23 点，<span class="down">-0.20%</span></td>
+              <td>深圳市场也小跌，说明调整不是只发生在主板。</td>
+            </tr>
+            <tr>
+              <td>创业板指</td>
+              <td>3914.88 点，<span class="down">-0.36%</span></td>
+              <td>成长股代表指数跌幅略大于上证，风险偏好有所降温。</td>
+            </tr>
+            <tr>
+              <td>沪深京三市成交额</td>
+              <td>29174 亿元，较上一交易日缩量 4530 亿元</td>
+              <td>成交额跌破 3 万亿元，说明市场热度比前一交易日下降。</td>
+            </tr>
+            <tr>
+              <td>涨跌家数</td>
+              <td>上涨股票接近 2400 只，超 3000 只个股下跌</td>
+              <td>涨少跌多，是局部行情，不是普涨。</td>
+            </tr>
+            <tr>
+              <td>强势行业</td>
+              <td>电子化学品、元件、煤炭、通信服务、金属新材料</td>
+              <td>强势方向集中在科技硬件、资源/防御以及部分通信链条。</td>
+            </tr>
+            <tr>
+              <td>弱势行业</td>
+              <td>稀土、医疗美容、乘用车、化学纤维、贵金属、保险</td>
+              <td>说明资金没有全面进攻，行业分化明显。</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          <strong>今日一句话：</strong>这是一个“指数小幅调整、成交明显缩量、个股涨少跌多，但科技硬件和算力相关方向仍有局部赚钱效应”的交易日。
+        </div>
+      </section>
+
+      <section id="order">
+        <h2>二、本节看盘顺序</h2>
+        <p>我们严格按之前讲义里的顺序来，不跳步。</p>
+        <div class="formula">指数 → 涨跌家数 → 成交额 → 板块 → 个股线索 → 消息/F10 → 复盘</div>
+        <table>
+          <thead>
+            <tr>
+              <th>步骤</th>
+              <th>今天要问的问题</th>
+              <th>今天得到的答案</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>看指数</td>
+              <td>市场整体强不强？</td>
+              <td>三大指数小幅收跌，整体偏弱震荡。</td>
+            </tr>
+            <tr>
+              <td>看涨跌家数</td>
+              <td>是不是普涨？</td>
+              <td>不是，超 3000 只下跌，属于涨少跌多。</td>
+            </tr>
+            <tr>
+              <td>看成交额</td>
+              <td>资金参与是否积极？</td>
+              <td>成交额跌破 3 万亿，较前一日明显缩量。</td>
+            </tr>
+            <tr>
+              <td>看板块</td>
+              <td>资金偏向哪里？</td>
+              <td>存储芯片、元件、通信服务、油气、算力相关更活跃。</td>
+            </tr>
+            <tr>
+              <td>看个股</td>
+              <td>哪些股票体现板块强度？</td>
+              <td>华工科技涨停并获主力净买入居前，存储芯片多股涨停。</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="indices">
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第一步</div>
+            <h3>看指数：先判断市场天气</h3>
+          </div>
+          <p>东方财富 Choice 数据显示，2026 年 5 月 18 日三大指数小幅回调：上证指数跌 0.09%，深证成指跌 0.20%，创业板指跌 0.36%。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>指数</th>
+                <th>今日表现</th>
+                <th>它告诉我们什么</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>上证指数</td>
+                <td>4131.53 点，<span class="down">-0.09%</span></td>
+                <td>大盘主板没有大跌，说明不是明显恐慌。</td>
+              </tr>
+              <tr>
+                <td>深证成指</td>
+                <td>15530.23 点，<span class="down">-0.20%</span></td>
+                <td>深圳市场同步调整，市场不是单一指数问题。</td>
+              </tr>
+              <tr>
+                <td>创业板指</td>
+                <td>3914.88 点，<span class="down">-0.36%</span></td>
+                <td>创业板跌得更明显一点，成长风格短线承压。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout blue">
+            <strong>教学判断：</strong>三大指数都跌，但跌幅都很小，所以不能说“市场崩了”。更合适的描述是：市场处在缩量震荡调整中，短线资金分歧加大。
+          </div>
+          <h3>新手容易犯的错</h3>
+          <p>看到绿盘就觉得“不能看了”，看到红盘就觉得“牛市来了”，这都是情绪化。今天这种盘面要看三个细节：跌幅小、成交缩量、但下跌家数偏多。它不是恐慌日，而是分化调整日。</p>
+        </div>
+      </section>
+
+      <section id="breadth">
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第二步</div>
+            <h3>看涨跌家数：判断普涨还是局部行情</h3>
+          </div>
+          <p>东方财富收盘报道提到，今日上涨股票数量接近 2400 只，超 3000 只个股下跌。这说明指数虽然只小跌，但个股层面并不轻松。</p>
+          <div class="grid">
+            <div class="card">
+              <h3>事实</h3>
+              <p>上涨接近 2400 只，下跌超过 3000 只。</p>
+            </div>
+            <div class="card">
+              <h3>结论</h3>
+              <p>涨少跌多，不是普涨行情。今天更像结构性行情。</p>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>如果只看指数</th>
+                <th>容易得到的误判</th>
+                <th>加上涨跌家数后</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>三大指数只是小跌</td>
+                <td>可能以为市场没有什么风险</td>
+                <td>超 3000 只下跌，说明多数股票其实承压。</td>
+              </tr>
+              <tr>
+                <td>盘中部分科技股很强</td>
+                <td>可能以为全市场都强</td>
+                <td>涨少跌多，说明强势集中在少数方向。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout amber">
+            <strong>今日关键词：</strong>不是普涨，而是局部结构性活跃。新手应先练习识别“哪里强、哪里弱”，不急着追最热的方向。
+          </div>
+        </div>
+      </section>
+
+      <section id="turnover">
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第三步</div>
+            <h3>看成交额：判断资金温度</h3>
+          </div>
+          <p>今日沪深京三市成交额 29174 亿元，较上一交易日大幅缩量 4530 亿元。东方财富另一篇盘后文章也提到，A股成交额为 5 月以来首次不足 3 万亿元。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>指标</th>
+                <th>今日数据</th>
+                <th>含义</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>沪深京三市成交额</td>
+                <td>29174 亿元</td>
+                <td>仍是很高的成交水平，但低于前期 3 万亿以上热度。</td>
+              </tr>
+              <tr>
+                <td>较上一交易日变化</td>
+                <td>缩量 4530 亿元</td>
+                <td>资金参与度下降，追涨力量减弱。</td>
+              </tr>
+              <tr>
+                <td>盘面状态</td>
+                <td>指数小跌 + 成交缩量</td>
+                <td>更像调整和观望，不是放量恐慌杀跌。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="formula">今日量价组合：指数小跌 + 成交缩量 = 短线热度降温，市场进入观察期</div>
+          <h3>怎么写进复盘</h3>
+          <p>你可以这样写：今天市场成交额跌破 3 万亿元，说明前期亢奋情绪有所冷却。因为指数只是小幅下跌，并未出现放量大跌，所以暂时更适合定义为缩量震荡调整。</p>
+        </div>
+      </section>
+
+      <section id="sectors">
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第四步</div>
+            <h3>看板块：找今天资金愿意停留的地方</h3>
+          </div>
+          <p>今天行业板块涨少跌多，但仍有几个方向相对活跃。东方财富 Choice 数据提到，电子化学品、元件、煤炭、通信服务、金属新材料板块涨幅居前；稀土、医疗美容、乘用车、化学纤维、贵金属、保险板块跌幅居前。</p>
+          <div class="grid">
+            <div class="card">
+              <h3>涨幅居前</h3>
+              <div class="pill-row">
+                <span class="pill">电子化学品</span>
+                <span class="pill">元件</span>
+                <span class="pill">煤炭</span>
+                <span class="pill">通信服务</span>
+                <span class="pill">金属新材料</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>跌幅居前</h3>
+              <div class="pill-row">
+                <span class="pill">稀土</span>
+                <span class="pill">医疗美容</span>
+                <span class="pill">乘用车</span>
+                <span class="pill">化学纤维</span>
+                <span class="pill">贵金属</span>
+                <span class="pill">保险</span>
+              </div>
+            </div>
+          </div>
+
+          <h3>概念和主线</h3>
+          <p>从盘面叙事看，油气股逆势走强，存储芯片概念快速拉升，机器人概念表现活跃，CPO 概念反复活跃；体育概念则集体调整。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>方向</th>
+                <th>今天的意义</th>
+                <th>新手该怎么观察</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>存储芯片</td>
+                <td>今日最清晰的强势主题之一，多只相关个股涨停。</td>
+                <td>观察它是单日消息刺激，还是能连续 2-3 天维持强度。</td>
+              </tr>
+              <tr>
+                <td>元件 / 电子化学品</td>
+                <td>和科技硬件、半导体链条相关，资金净流入靠前。</td>
+                <td>观察板块内是否多数股票跟涨，而不是只有一只龙头。</td>
+              </tr>
+              <tr>
+                <td>通信服务 / CPO / 算力</td>
+                <td>受 AI 算力、Token 套餐、数据中心等叙事影响。</td>
+                <td>和创业板、科创、科技成长指数一起对照看。</td>
+              </tr>
+              <tr>
+                <td>煤炭 / 油气</td>
+                <td>偏资源和防御属性，今天逆势活跃。</td>
+                <td>看它是商品价格驱动，还是市场避险资金短暂停留。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout blue">
+            <strong>今日板块结论：</strong>市场整体不强，但资金没有完全离场，而是集中在“科技硬件/存储/算力”和“油气煤炭”等少数方向。这就是结构性行情。
+          </div>
+        </div>
+      </section>
+
+      <section id="stocks">
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第五步</div>
+            <h3>看个股线索：用个股验证板块强度</h3>
+          </div>
+          <p>新手看个股，不是为了立刻买，而是为了验证板块强不强。今天可以用两个案例观察。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>观察对象</th>
+                <th>今日表现</th>
+                <th>它说明什么</th>
+                <th>学习重点</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>华工科技</td>
+                <td>涨停，主力净买入 22.99 亿元，居主力净买入个股前列。</td>
+                <td>说明资金对部分科技硬件/算力链条个股仍有强关注。</td>
+                <td>观察它是板块龙头带动，还是单独事件刺激。</td>
+              </tr>
+              <tr>
+                <td>存储芯片相关个股</td>
+                <td>大普微-UW、同有科技 20cm 涨停，万润科技、深科技、生益科技等涨停。</td>
+                <td>说明存储芯片不是单一个股表现，而是板块内多点开花。</td>
+                <td>板块强度要看“成分股群体表现”。</td>
+              </tr>
+              <tr>
+                <td>中际旭创</td>
+                <td>主力净卖出 20.28 亿元，居主力净卖出个股前列。</td>
+                <td>热门高位方向内部也可能分化，不是所有 AI 链股票都同步强。</td>
+                <td>强板块内部也要区分龙头、补涨、分歧和高位兑现。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout red">
+            <strong>风险提醒：</strong>主力净流入、涨停、龙虎榜都只能作为观察材料，不是买入理由。今天最重要的训练是识别“板块强度”和“个股相对强弱”。
+          </div>
+
+          <h3>今日个股观察模板</h3>
+          <div class="template">观察股票：
+所属板块：
+今日涨跌：
+是否强于大盘：
+是否属于今日强势板块：
+成交额/成交量是否明显放大：
+分时走势：高开低走 / 低开高走 / 冲高回落 / 全天强势 / 全天弱势
+我对它的判断：只是跟风，还是板块代表？
+明天继续观察的问题：</div>
+        </div>
+      </section>
+
+      <section id="summary">
+        <h2>八、今日复盘示范</h2>
+        <p>下面是一份可以直接模仿的复盘。注意，它不是预测明天，而是在训练你把事实、判断和情绪分开。</p>
+        <div class="template">日期：2026-05-18
+
+一、市场环境
+今天三大指数小幅收跌：上证指数 -0.09%，深证成指 -0.20%，创业板指 -0.36%。指数跌幅不大，但市场并不算强。
+
+二、市场广度
+上涨股票接近 2400 只，超过 3000 只个股下跌，说明今天不是普涨行情，而是涨少跌多的结构性行情。
+
+三、成交额
+沪深京三市成交额 29174 亿元，较上一交易日缩量 4530 亿元，成交额跌破 3 万亿元。说明市场热度下降，短线资金更谨慎。
+
+四、板块表现
+强势方向集中在电子化学品、元件、煤炭、通信服务、金属新材料，以及存储芯片、油气、机器人、CPO、算力相关方向。
+弱势方向包括稀土、医疗美容、乘用车、化学纤维、贵金属、保险等。
+
+五、个股观察
+华工科技涨停且主力净买入居前，说明部分科技硬件方向仍有资金关注。
+存储芯片多股涨停，说明该方向有板块效应。
+但中际旭创主力净卖出居前，说明热门科技方向内部也在分化。
+
+六、我的判断
+今天市场整体是缩量震荡调整，不是恐慌大跌。资金没有全面进攻，而是集中在少数科技硬件、存储、算力和资源方向。
+
+七、明日观察
+1. 成交额能否重新回到 3 万亿元以上。
+2. 存储芯片和元件板块是否能继续强于大盘。
+3. 今天涨停或强势的科技股明天是否出现分化。
+4. 下跌家数是否减少，市场广度能否修复。</div>
+      </section>
+
+      <section id="homework">
+        <h2>九、课后作业</h2>
+        <p>打开东方财富，按下面的任务做一遍。今天不要做买卖判断，只做观察。</p>
+        <ul class="task-list">
+          <li>在行情页找到上证指数、深证成指、创业板指，确认今天的涨跌幅。</li>
+          <li>找到沪深京三市成交额，记录是否高于或低于 3 万亿元。</li>
+          <li>进入板块页，找到“电子化学品、元件、通信服务、存储芯片”等方向。</li>
+          <li>从存储芯片板块里选 2 只今天上涨明显的股票，观察它们的分时图。</li>
+          <li>从跌幅居前行业里选 1 个板块，观察它是普遍下跌还是少数股票拖累。</li>
+          <li>写一句自己的复盘结论：今天市场是普涨、普跌，还是结构性行情？为什么？</li>
+        </ul>
+        <div class="callout">
+          <strong>打分标准：</strong>你不需要判断明天涨跌。只要能用“指数、涨跌家数、成交额、板块、个股”五个证据说清楚今天的市场，就算完成。
+        </div>
+      </section>
+
+      <section id="sources">
+        <h2>十、数据来源</h2>
+        <ul>
+          <li><a href="https://finance.eastmoney.com/a/202605183740333278.html">东方财富Choice数据：A股三大指数小幅收跌，成交额跌破三万亿，存储芯片板块走强</a></li>
+          <li><a href="https://finance.eastmoney.com/a/202605183740355242.html">东方财富网：本月首次 A股成交额不足3万亿元，三大指数“拉尾盘”</a></li>
+          <li><a href="https://finance.eastmoney.com/a/202605183740351328.html">东方财富Choice数据：主力复盘，华工科技主力净买入居前</a></li>
+          <li><a href="https://finance.eastmoney.com/a/202605183740202873.html">东方财富研究中心：AI芯片逆势走强</a></li>
+          <li><a href="https://stock.eastmoney.com/">东方财富股票频道</a></li>
+        </ul>
+        <p>不同页面会因统计口径出现“沪深两市、沪深京三市、全A”等说法，本讲义优先使用东方财富 Choice 数据盘后文章中的沪深京三市成交额，并在解读中说明“成交跌破 3 万亿元”这一核心事实。</p>
+      </section>
+
+      <div class="footer">
+        <p>生成日期：2026-05-18。本文档为学习讲义，不构成任何投资建议。真实盘面会持续变化，复盘应以你打开东方财富时看到的最新行情为准。</p>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

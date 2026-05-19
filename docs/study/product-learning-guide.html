@@ -1,0 +1,1182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>信贷风控中后台产品 7 天学习指南</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --muted: #4b5563;
+      --soft: #f3f7fb;
+      --line: #d8e3ee;
+      --panel: #ffffff;
+      --nav: #0c3431;
+      --nav-soft: #b9d7d1;
+      --nav-ink: #eefdf8;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --warning: #a16207;
+      --danger: #b91c1c;
+      --deep: #0f172a;
+      --green-tint: #edf8f5;
+      --blue-tint: #eef5ff;
+      --yellow-tint: #fff8e6;
+      --red-tint: #fff1f2;
+      --shadow: 0 22px 55px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #e9f0f6;
+      line-height: 1.72;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      min-height: 100vh;
+      max-width: 1680px;
+      margin: 0 auto;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      padding: 28px 26px;
+      color: var(--nav-ink);
+      background: linear-gradient(180deg, #0b3431 0%, #092c2a 100%);
+    }
+
+    .brand {
+      margin-bottom: 26px;
+    }
+
+    .brand h1 {
+      margin: 0 0 16px;
+      font-size: 25px;
+      line-height: 1.28;
+      font-weight: 850;
+    }
+
+    .brand p {
+      margin: 0;
+      color: var(--nav-soft);
+      font-size: 15px;
+      font-weight: 650;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 26px 0 30px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 6px 12px;
+      border: 1px solid rgba(238, 253, 248, 0.24);
+      border-radius: 999px;
+      color: #e8f8f4;
+      font-size: 13px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .side-title {
+      margin: 28px 0 11px;
+      color: #96c9c1;
+      font-size: 14px;
+      font-weight: 850;
+    }
+
+    .toc {
+      display: grid;
+      gap: 7px;
+    }
+
+    .toc a {
+      display: block;
+      padding: 3px 2px;
+      color: #d6ebe7;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .toc a:hover {
+      color: #ffffff;
+    }
+
+    .mantra {
+      padding-left: 18px;
+      margin: 10px 0 0;
+      color: #d9efea;
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .mantra li + li {
+      margin-top: 8px;
+    }
+
+    main {
+      padding: 40px 54px 70px;
+      min-width: 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero h2 {
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(34px, 4vw, 54px);
+      line-height: 1.12;
+      font-weight: 900;
+    }
+
+    .lead {
+      max-width: 1120px;
+      margin: 20px 0 0;
+      color: #2f3b4d;
+      font-size: 21px;
+      font-weight: 750;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 30px 0 36px;
+    }
+
+    .tag {
+      min-height: 44px;
+      padding: 9px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fbfe;
+      color: #415166;
+      font-size: 15px;
+      font-weight: 750;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 34px 0;
+    }
+
+    section {
+      scroll-margin-top: 28px;
+      margin-top: 42px;
+    }
+
+    h3 {
+      margin: 0 0 16px;
+      font-size: 32px;
+      line-height: 1.24;
+      font-weight: 900;
+    }
+
+    h4 {
+      margin: 0 0 12px;
+      font-size: 21px;
+      line-height: 1.35;
+      font-weight: 900;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: #263246;
+      font-size: 18px;
+      font-weight: 650;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 22px;
+    }
+
+    .card ul,
+    .card ol {
+      margin: 12px 0 0;
+      padding-left: 22px;
+      color: #1f2937;
+      font-size: 17px;
+      font-weight: 650;
+    }
+
+    .card li + li {
+      margin-top: 7px;
+    }
+
+    .strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 22px 0;
+      padding: 19px 22px;
+      border-radius: 8px;
+      color: #f8fafc;
+      background: var(--deep);
+      font-size: 20px;
+      font-weight: 850;
+    }
+
+    .arrow {
+      color: #cbd5e1;
+    }
+
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(126px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .day {
+      min-height: 150px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(180deg, #ffffff, #f8fbfe);
+    }
+
+    .day b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+    }
+
+    .day strong {
+      display: block;
+      min-height: 50px;
+      color: #172033;
+      font-size: 17px;
+      line-height: 1.42;
+    }
+
+    .day span {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .module {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 20px;
+      padding: 22px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .module:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .module-code {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    .module-code span {
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .module-body {
+      min-width: 0;
+    }
+
+    .module-body p {
+      font-size: 17px;
+    }
+
+    .task-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .mini {
+      min-height: 116px;
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .mini:nth-child(2) {
+      background: var(--green-tint);
+    }
+
+    .mini:nth-child(3) {
+      background: var(--blue-tint);
+    }
+
+    .mini h5 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      line-height: 1.35;
+      font-weight: 900;
+    }
+
+    .mini p {
+      margin: 0;
+      color: #334155;
+      font-size: 15px;
+      font-weight: 650;
+    }
+
+    .map {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .node {
+      min-height: 112px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--accent);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .node:nth-child(2n) {
+      border-left-color: var(--accent-2);
+    }
+
+    .node:nth-child(3n) {
+      border-left-color: var(--warning);
+    }
+
+    .node strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 17px;
+      line-height: 1.38;
+    }
+
+    .node span {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    table {
+      width: 100%;
+      min-width: 860px;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+
+    th,
+    td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f7fafc;
+      color: #334155;
+      font-weight: 900;
+    }
+
+    td {
+      color: #263246;
+      font-weight: 650;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .project {
+      border: 1px solid #b9d8d3;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #f3fbf9, #ffffff);
+      padding: 24px;
+    }
+
+    .project h4 {
+      font-size: 25px;
+    }
+
+    .callout {
+      padding: 18px 20px;
+      border: 1px solid #f0d690;
+      border-radius: 8px;
+      background: var(--yellow-tint);
+    }
+
+    .callout p {
+      margin: 0;
+      color: #62420d;
+      font-size: 16px;
+    }
+
+    .danger {
+      border-color: #fecdd3;
+      background: var(--red-tint);
+    }
+
+    .danger p {
+      color: var(--danger);
+    }
+
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .check {
+      min-height: 58px;
+      padding: 13px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      color: #263246;
+      font-size: 16px;
+      font-weight: 750;
+    }
+
+    .footer-note {
+      margin-top: 40px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1120px) {
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: relative;
+        height: auto;
+      }
+
+      .day-grid,
+      .map,
+      .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      main {
+        padding: 30px 20px 46px;
+      }
+
+      aside {
+        padding: 24px 20px;
+      }
+
+      .grid-2,
+      .grid-3,
+      .day-grid,
+      .task-grid,
+      .map,
+      .checklist {
+        grid-template-columns: 1fr;
+      }
+
+      .module {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .hero h2 {
+        font-size: 34px;
+      }
+
+      .lead {
+        font-size: 18px;
+      }
+
+      h3 {
+        font-size: 27px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside>
+      <div class="brand">
+        <h1>产品学习入门讲义</h1>
+        <p>7 天训练营式讲义。目标是从产品视角读懂信贷风控中后台，并能独立做一个完整项目。</p>
+      </div>
+
+      <div class="pill-row">
+        <span class="pill">7 天规划</span>
+        <span class="pill">中后台产品</span>
+        <span class="pill">项目实战</span>
+      </div>
+
+      <div class="side-title">目录</div>
+      <nav class="toc">
+        <a href="#goal">1. 学习目标</a>
+        <a href="#overview">2. 课程总览</a>
+        <a href="#product-map">3. 产品地图</a>
+        <a href="#metrics">4. 指标字典</a>
+        <a href="#days">5. 每日训练</a>
+        <a href="#prototype">6. 软件实操</a>
+        <a href="#project">7. 最终项目</a>
+        <a href="#prd">8. PRD 结构</a>
+        <a href="#review">9. 复盘模板</a>
+        <a href="#compression">10. 5 天压缩版</a>
+      </nav>
+
+      <div class="side-title">核心口诀</div>
+      <ul class="mantra">
+        <li>先看业务链路，再看页面。</li>
+        <li>先定义角色，再定义权限。</li>
+        <li>先拆状态，再画流程。</li>
+        <li>先定指标，再谈优化。</li>
+        <li>中后台产品的本质是让复杂业务可控、可追踪、可复盘。</li>
+      </ul>
+    </aside>
+
+    <main>
+      <header class="hero">
+        <p class="eyebrow">Product Learning Notes</p>
+        <h2>信贷风控中后台产品 7 天学习指南</h2>
+        <p class="lead">这份讲义把产品基础、信贷生命周期、风控策略、审批工作台、支付还款链路、中后台设计方法和原型工具实操，整理成一套 5～7 天可执行训练。最后你会完成一个“小微信贷风控运营中台”的完整产品项目。</p>
+
+        <div class="meta">
+          <span class="tag">适合对象：想转产品、补中后台经验、理解金融科技产品的人</span>
+          <span class="tag">建议时长：每天 90～150 分钟</span>
+          <span class="tag">学习方式：每天输入、拆解、输出一份产物</span>
+          <span class="tag">最终产物：PRD + 信息架构 + 流程图 + 指标方案 + 可演示原型</span>
+        </div>
+      </header>
+
+      <hr>
+
+      <section id="goal">
+        <h3>一、学习目标</h3>
+        <p>这套训练不追求背概念，而是让你能像一个中后台产品经理一样思考：谁在用系统、他要完成什么任务、业务状态如何流转、风险如何被识别、异常如何处理、指标如何反馈产品效果。</p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h4>你要学会</h4>
+            <ul>
+              <li>拆解信贷业务从申请、授信、支用、放款、还款到逾期的完整生命周期。</li>
+              <li>理解风控产品中的规则、模型、策略、名单、人工审核和监控看板。</li>
+              <li>设计中后台常见页面：列表、详情、审批台、配置台、看板、日志与权限。</li>
+              <li>用 PRD 说清楚目标、范围、流程、字段、状态、异常、指标和验收标准。</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h4>你暂时不做</h4>
+            <ul>
+              <li>不把金融产品简化成“画几个页面”。</li>
+              <li>不直接套模板写需求，先把业务和风险想清楚。</li>
+              <li>不追求复杂模型细节，重点理解产品如何承接策略结果。</li>
+              <li>不把“通过率高”当成唯一目标，要同时看风险、成本、体验和合规。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="strip">
+          <span>业务链路</span><span class="arrow">→</span>
+          <span>角色任务</span><span class="arrow">→</span>
+          <span>状态流程</span><span class="arrow">→</span>
+          <span>页面能力</span><span class="arrow">→</span>
+          <span>指标复盘</span>
+        </div>
+      </section>
+
+      <section id="overview">
+        <h3>二、课程总览：总共 7 天</h3>
+        <p>第 1～2 天建立产品与信贷基础，第 3～5 天进入风控、审批、支付还款等核心模块，第 6 天学习中后台体验设计和原型工具，第 7 天完成项目整合。</p>
+
+        <div class="day-grid">
+          <div class="day">
+            <b>DAY 01</b>
+            <strong>产品经理的业务拆解方法</strong>
+            <span>用户、场景、任务、流程、指标</span>
+          </div>
+          <div class="day">
+            <b>DAY 02</b>
+            <strong>信贷产品生命周期</strong>
+            <span>申请、授信、放款、还款、逾期</span>
+          </div>
+          <div class="day">
+            <b>DAY 03</b>
+            <strong>风控策略与决策引擎</strong>
+            <span>规则、模型、名单、策略命中</span>
+          </div>
+          <div class="day">
+            <b>DAY 04</b>
+            <strong>审核工作台与案件流转</strong>
+            <span>队列、详情、动作、日志、质检</span>
+          </div>
+          <div class="day">
+            <b>DAY 05</b>
+            <strong>支付、放款、还款与账务</strong>
+            <span>通道、订单、对账、失败补偿</span>
+          </div>
+          <div class="day">
+            <b>DAY 06</b>
+            <strong>中后台页面、权限与原型工具</strong>
+            <span>导航、表格、筛选、角色、审计、Figma / Axure / 墨刀</span>
+          </div>
+          <div class="day">
+            <b>DAY 07</b>
+            <strong>完整项目实战</strong>
+            <span>小微信贷风控运营中台 PRD + 原型</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="product-map">
+        <h3>三、产品地图：你要做的不是单页，而是一套工作系统</h3>
+        <p>中后台产品的页面不是孤立存在的。每个页面都要承接一个角色的任务、一个业务状态的变化，以及一条可追踪的数据记录。</p>
+
+        <div class="map">
+          <div class="node">
+            <strong>经营看板</strong>
+            <span>申请量、授信通过率、放款金额、逾期率、策略命中、人工审核量。</span>
+          </div>
+          <div class="node">
+            <strong>客户与申请管理</strong>
+            <span>客户资料、申请单、征信摘要、设备与行为信息、历史订单。</span>
+          </div>
+          <div class="node">
+            <strong>风控策略配置</strong>
+            <span>规则集、阈值、名单、模型分、策略版本、灰度和回滚。</span>
+          </div>
+          <div class="node">
+            <strong>决策结果中心</strong>
+            <span>通过、拒绝、转人工、额度、利率、期限、原因码。</span>
+          </div>
+          <div class="node">
+            <strong>人工审核工作台</strong>
+            <span>案件队列、详情页、补件、通过、拒绝、挂起、复核。</span>
+          </div>
+          <div class="node">
+            <strong>放款与支付通道</strong>
+            <span>订单状态、通道选择、失败重试、回调、渠道成本。</span>
+          </div>
+          <div class="node">
+            <strong>还款与逾期管理</strong>
+            <span>还款计划、扣款结果、宽限期、催收分案、逾期标签。</span>
+          </div>
+          <div class="node">
+            <strong>权限与审计日志</strong>
+            <span>角色权限、敏感字段脱敏、操作日志、审批留痕。</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="metrics">
+        <h3>四、指标字典：先能说清楚，再谈优化</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>指标</th>
+                <th>含义</th>
+                <th>产品上怎么用</th>
+                <th>常见误区</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>申请量</td>
+                <td>进入信贷申请流程的用户或订单数量。</td>
+                <td>判断入口、渠道、活动和产品改版是否影响漏斗。</td>
+                <td>只看总量，不拆渠道、客群和时间。</td>
+              </tr>
+              <tr>
+                <td>授信通过率</td>
+                <td>申请授信后获得额度的比例。</td>
+                <td>观察策略松紧、模型效果、人工审核承接能力。</td>
+                <td>把通过率越高越好，忽略后续坏账。</td>
+              </tr>
+              <tr>
+                <td>转人工率</td>
+                <td>自动决策无法直接通过或拒绝，需要人工审核的比例。</td>
+                <td>衡量规则覆盖、数据质量和审核资源压力。</td>
+                <td>不区分高风险转人工和资料缺失转人工。</td>
+              </tr>
+              <tr>
+                <td>DPD</td>
+                <td>Days Past Due，逾期天数。</td>
+                <td>用于逾期分层、催收策略、风险监控。</td>
+                <td>只看是否逾期，不看逾期阶段。</td>
+              </tr>
+              <tr>
+                <td>MOB</td>
+                <td>Month On Book，放款后的账龄月份。</td>
+                <td>用来观察不同放款批次的风险表现。</td>
+                <td>不同账龄混在一起比较坏账率。</td>
+              </tr>
+              <tr>
+                <td>支付成功率</td>
+                <td>放款或还款请求最终成功的比例。</td>
+                <td>监控通道稳定性、失败重试、资金链路异常。</td>
+                <td>只看支付侧成功，不看业务订单最终状态。</td>
+              </tr>
+              <tr>
+                <td>策略命中率</td>
+                <td>某条规则或规则集命中申请的比例。</td>
+                <td>判断规则覆盖范围、误伤风险和版本调整效果。</td>
+                <td>命中率高就认为规则有效，缺少坏样本验证。</td>
+              </tr>
+              <tr>
+                <td>人工审核 TAT</td>
+                <td>从进入人工队列到审核完成的耗时。</td>
+                <td>衡量审核工作台效率和任务分配合理性。</td>
+                <td>只看平均值，忽略长尾案件。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="days">
+        <h3>五、每日训练安排</h3>
+
+        <div class="module">
+          <div class="module-code">DAY 01<span>产品基本功</span></div>
+          <div class="module-body">
+            <h4>从“功能思维”切到“业务任务思维”</h4>
+            <p>学习怎么拆角色、场景、任务、流程和指标。你要拿一个后台页面，反推它服务的是谁、解决什么问题、为什么这些字段会出现。</p>
+            <div class="task-grid">
+              <div class="mini"><h5>输入</h5><p>产品经理职责、中后台产品特点、B 端角色任务拆解。</p></div>
+              <div class="mini"><h5>练习</h5><p>选一个后台页面，写出 3 类用户、5 个任务、1 条主流程。</p></div>
+              <div class="mini"><h5>输出</h5><p>《业务角色与任务清单》一页。</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module">
+          <div class="module-code">DAY 02<span>信贷链路</span></div>
+          <div class="module-body">
+            <h4>读懂信贷生命周期和核心对象</h4>
+            <p>把“借钱”拆成产品对象：客户、申请单、额度、合同、放款单、还款计划、账单、逾期记录。每个对象都有状态，状态之间有触发条件。</p>
+            <div class="task-grid">
+              <div class="mini"><h5>输入</h5><p>授信、支用、放款、计息、还款、逾期、核销的基本概念。</p></div>
+              <div class="mini"><h5>练习</h5><p>画出从申请到还款完成的状态流转图。</p></div>
+              <div class="mini"><h5>输出</h5><p>《信贷业务状态机》一页。</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module">
+          <div class="module-code">DAY 03<span>风控策略</span></div>
+          <div class="module-body">
+            <h4>理解规则、模型、名单和策略决策</h4>
+            <p>风控不是一个“拒绝按钮”，而是一组分层判断：准入、反欺诈、信用评估、额度定价、贷后预警。产品要把策略结果变成可配置、可解释、可监控的能力。</p>
+            <div class="task-grid">
+              <div class="mini"><h5>输入</h5><p>规则引擎、模型分、原因码、黑白名单、策略版本。</p></div>
+              <div class="mini"><h5>练习</h5><p>设计 8 条示例规则，并定义通过、拒绝、转人工三种结果。</p></div>
+              <div class="mini"><h5>输出</h5><p>《风控决策表 + 原因码字典》。</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module">
+          <div class="module-code">DAY 04<span>审核工作台</span></div>
+          <div class="module-body">
+            <h4>把人工审核设计成高效、留痕、可复核的工作流</h4>
+            <p>审核员需要的不是“资料很多的详情页”，而是能快速定位风险点、完成动作、留下依据，并支持主管复核和质检的数据链路。</p>
+            <div class="task-grid">
+              <div class="mini"><h5>输入</h5><p>案件队列、优先级、任务分配、补件、审核动作、质检。</p></div>
+              <div class="mini"><h5>练习</h5><p>设计审核列表和审核详情页的字段、筛选和按钮。</p></div>
+              <div class="mini"><h5>输出</h5><p>《审核工作台页面说明》。</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module">
+          <div class="module-code">DAY 05<span>支付账务</span></div>
+          <div class="module-body">
+            <h4>看懂放款、还款、对账和异常补偿</h4>
+            <p>信贷产品最终会落到资金链路。中后台要能展示订单状态、支付通道、回调结果、对账差异、重试记录和人工处理入口。</p>
+            <div class="task-grid">
+              <div class="mini"><h5>输入</h5><p>放款订单、还款订单、支付通道、回调、对账、差错处理。</p></div>
+              <div class="mini"><h5>练习</h5><p>列出支付失败的 6 种原因和对应产品处理方案。</p></div>
+              <div class="mini"><h5>输出</h5><p>《支付异常处理流程》。</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module">
+          <div class="module-code">DAY 06<span>中后台体验 + 工具</span></div>
+          <div class="module-body">
+            <h4>设计列表、详情、配置、权限和可演示原型</h4>
+            <p>中后台体验的关键不是漂亮，而是低出错、高效率、可追踪。你要学会筛选项怎么定、表格列怎么排、按钮何时出现、敏感数据如何脱敏、操作如何留痕，并用 Axure、Figma 或墨刀把核心页面做成可演示原型。</p>
+            <div class="task-grid">
+              <div class="mini"><h5>输入</h5><p>信息架构、权限矩阵、表格设计、配置发布、审计日志、原型工具基础。</p></div>
+              <div class="mini"><h5>练习</h5><p>选择 Figma、Axure 或墨刀，做出看板、列表、详情、配置页 4 个核心页面。</p></div>
+              <div class="mini"><h5>输出</h5><p>《信息架构 + 权限矩阵 + 低保真原型》。</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="module">
+          <div class="module-code">DAY 07<span>项目整合</span></div>
+          <div class="module-body">
+            <h4>完成“小微信贷风控运营中台”项目</h4>
+            <p>把前 6 天产物合并成一个完整项目：业务背景、目标、用户角色、流程、页面、字段、权限、指标、异常、验收标准和可演示原型。重点是闭环，不是堆页面。</p>
+            <div class="task-grid">
+              <div class="mini"><h5>输入</h5><p>前 6 天所有输出物和一个完整业务场景。</p></div>
+              <div class="mini"><h5>练习</h5><p>写 PRD、画流程图、定义页面清单、补齐原型跳转和验收标准。</p></div>
+              <div class="mini"><h5>输出</h5><p>完整项目文档 + 可演示原型，可用于作品集或面试讲解。</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="prototype">
+        <h3>六、软件实操：Axure / Figma / 墨刀怎么练</h3>
+        <p>工具不是目的，但它能逼你把需求变具体。建议本项目优先用 Figma 或墨刀做页面结构和展示，用 Axure 练复杂条件交互。刚入门时不要同时深学三个工具，先选一个主工具，再了解另外两个的适用场景。</p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h4>Figma 路线</h4>
+            <ul>
+              <li>适合：作品集展示、组件复用、视觉整洁的中后台页面。</li>
+              <li>重点练：Auto layout、组件、表格、弹窗、侧边栏、状态标签。</li>
+              <li>本项目产出：经营看板、申请列表、审核详情、规则配置页。</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h4>Axure 路线</h4>
+            <ul>
+              <li>适合：审核流转、条件判断、动态面板、复杂表单交互。</li>
+              <li>重点练：母版、动态面板、中继器、条件交互、变量。</li>
+              <li>本项目产出：案件领取、审核动作、补件弹窗、状态变更演示。</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h4>墨刀路线</h4>
+            <ul>
+              <li>适合：快速低保真、中文团队协作、流程演示。</li>
+              <li>重点练：页面跳转、组件库、批注、流程图、分享链接。</li>
+              <li>本项目产出：菜单结构、页面跳转、审核流程演示稿。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>训练阶段</th>
+                <th>你要做什么</th>
+                <th>建议工具</th>
+                <th>验收标准</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1. 低保真线框</td>
+                <td>画出左侧导航、顶部筛选、表格、详情区、操作区。</td>
+                <td>墨刀 / Figma</td>
+                <td>别人一眼能看懂页面承担的业务任务。</td>
+              </tr>
+              <tr>
+                <td>2. 核心页面</td>
+                <td>完成经营看板、申请列表、审核详情、规则配置、支付订单中心。</td>
+                <td>Figma</td>
+                <td>页面字段、状态标签、按钮和空状态完整。</td>
+              </tr>
+              <tr>
+                <td>3. 关键交互</td>
+                <td>演示案件领取、审核通过、拒绝、补件、支付失败重试。</td>
+                <td>Axure / 墨刀</td>
+                <td>至少有 3 条可点击链路，不只是静态截图。</td>
+              </tr>
+              <tr>
+                <td>4. 交付说明</td>
+                <td>给页面加批注，说明字段来源、按钮权限、异常提示和状态变化。</td>
+                <td>Figma / Axure</td>
+                <td>工程、测试、运营能按批注理解需求。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="strip">
+          <span>先画流程</span><span class="arrow">→</span>
+          <span>再搭页面</span><span class="arrow">→</span>
+          <span>补齐状态</span><span class="arrow">→</span>
+          <span>做关键跳转</span><span class="arrow">→</span>
+          <span>写交付批注</span>
+        </div>
+      </section>
+
+      <section id="project">
+        <h3>七、最终项目：小微信贷风控运营中台</h3>
+        <div class="project">
+          <h4>项目背景</h4>
+          <p>一家面向小微商户的现金贷平台，希望提升授信审批效率，同时控制欺诈和逾期风险。现在的问题是：审核人员在多个系统之间切换，策略命中原因不透明，支付失败需要人工查日志，主管无法快速复盘某天通过率异常的原因。</p>
+
+          <div class="grid-3">
+            <div class="card">
+              <h4>核心用户</h4>
+              <ul>
+                <li>风控运营：配置规则、查看策略效果。</li>
+                <li>审核员：处理转人工案件。</li>
+                <li>审核主管：分配任务、复核、质检。</li>
+                <li>支付运营：处理放款与还款异常。</li>
+                <li>产品经理：看漏斗、指标、异常和改版效果。</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>核心目标</h4>
+              <ul>
+                <li>把平均人工审核耗时从 18 分钟降到 10 分钟。</li>
+                <li>让每笔拒绝、转人工和额度调整都有原因可查。</li>
+                <li>让支付失败订单能在 30 分钟内被识别和处理。</li>
+                <li>让策略版本上线后能按天观察效果。</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>项目边界</h4>
+              <ul>
+                <li>本项目只设计运营中后台，不设计 C 端借款 App。</li>
+                <li>模型训练平台不做，只承接模型分和原因码。</li>
+                <li>催收系统不做深，只保留逾期分层和移交入口。</li>
+                <li>不涉及真实个人信息，所有敏感字段默认脱敏。</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="strip">
+            <span>申请进入</span><span class="arrow">→</span>
+            <span>风控决策</span><span class="arrow">→</span>
+            <span>人工审核</span><span class="arrow">→</span>
+            <span>放款支付</span><span class="arrow">→</span>
+            <span>还款监控</span><span class="arrow">→</span>
+            <span>策略复盘</span>
+          </div>
+
+          <h4>你需要设计的页面</h4>
+          <div class="checklist">
+            <div class="check">经营概览看板：申请、授信、放款、逾期、支付成功率。</div>
+            <div class="check">申请单列表：筛选、状态、渠道、风险等级、处理人。</div>
+            <div class="check">申请详情页：客户资料、征信摘要、规则命中、历史订单。</div>
+            <div class="check">审核工作台：待办队列、领取、通过、拒绝、补件、挂起。</div>
+            <div class="check">风控规则配置：规则集、条件、动作、版本、灰度、回滚。</div>
+            <div class="check">决策日志：请求参数摘要、命中规则、模型分、原因码。</div>
+            <div class="check">支付订单中心：放款、还款、通道、回调、失败重试。</div>
+            <div class="check">权限与审计：角色、菜单、按钮、字段权限、操作日志。</div>
+          </div>
+
+          <h4>原型交付要求</h4>
+          <div class="checklist">
+            <div class="check">至少 5 个页面：经营看板、申请列表、申请详情、审核工作台、规则配置。</div>
+            <div class="check">至少 3 条可点击链路：查看详情、审核处理、规则版本发布。</div>
+            <div class="check">至少 6 类状态标签：待审核、审核中、通过、拒绝、补件中、支付失败。</div>
+            <div class="check">至少 3 个弹窗：审核意见、补件要求、规则发布确认。</div>
+            <div class="check">每个页面加批注：字段来源、操作权限、异常提示、验收标准。</div>
+            <div class="check">最终用一页说明讲清楚：为什么这样设计，而不是只展示页面。</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="prd">
+        <h3>八、PRD 结构：最后交付就按这个写</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>章节</th>
+                <th>必须回答的问题</th>
+                <th>建议产物</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1. 背景与目标</td>
+                <td>为什么要做？业务问题是什么？成功标准是什么？</td>
+                <td>背景说明、目标指标、非目标范围。</td>
+              </tr>
+              <tr>
+                <td>2. 用户与场景</td>
+                <td>谁使用？在什么场景下使用？有什么权限差异？</td>
+                <td>角色清单、场景清单、权限矩阵。</td>
+              </tr>
+              <tr>
+                <td>3. 业务流程</td>
+                <td>从申请进入到最终完成，状态如何流转？异常怎么走？</td>
+                <td>主流程图、状态机、异常流程。</td>
+              </tr>
+              <tr>
+                <td>4. 功能范围</td>
+                <td>本期做哪些模块？哪些不做？依赖哪些系统？</td>
+                <td>功能清单、优先级、依赖关系。</td>
+              </tr>
+              <tr>
+                <td>5. 页面说明</td>
+                <td>每个页面展示什么字段？支持什么筛选、动作和状态？</td>
+                <td>页面结构、字段表、原型链接、交互规则。</td>
+              </tr>
+              <tr>
+                <td>6. 数据与接口</td>
+                <td>核心对象有哪些？字段从哪里来？数据如何更新？</td>
+                <td>对象模型、字段字典、接口说明。</td>
+              </tr>
+              <tr>
+                <td>7. 风险与异常</td>
+                <td>数据缺失、支付失败、策略异常、权限误配时怎么办？</td>
+                <td>异常表、兜底方案、告警规则。</td>
+              </tr>
+              <tr>
+                <td>8. 指标与验收</td>
+                <td>上线后看什么指标？怎样才算做完？</td>
+                <td>埋点指标、验收用例、灰度计划。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="review">
+        <h3>九、每日复盘模板</h3>
+        <div class="grid-2">
+          <div class="card">
+            <h4>每天结束前回答</h4>
+            <ul>
+              <li>今天我理解了哪一条业务链路？</li>
+              <li>这条链路里有哪几个角色？他们最怕什么？</li>
+              <li>有哪些状态、异常和边界条件？</li>
+              <li>如果我是产品经理，我会先做哪个页面？为什么？</li>
+              <li>今天的原型有没有表达出真实业务动作，而不是只摆放组件？</li>
+              <li>今天的输出物能否被工程、运营、测试看懂？</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h4>面试讲解顺序</h4>
+            <ul>
+              <li>先讲业务背景和目标，而不是先讲页面。</li>
+              <li>再讲角色、流程和关键状态。</li>
+              <li>然后讲你为什么这样设计页面和权限。</li>
+              <li>接着打开原型，演示 1 条完整链路。</li>
+              <li>最后讲指标、异常处理和上线后的复盘方式。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p>判断自己有没有真正学会：把一个“审核工作台”讲给不懂金融的人听，对方能听懂谁在什么情况下点哪个按钮、系统状态怎么变、为什么这个动作有风险。</p>
+        </div>
+      </section>
+
+      <section id="compression">
+        <h3>十、如果只有 5 天，怎么压缩</h3>
+        <div class="grid-2">
+          <div class="card">
+            <h4>5 天路线</h4>
+            <ol>
+              <li>第 1 天：产品方法 + 信贷生命周期。</li>
+              <li>第 2 天：风控策略 + 决策结果。</li>
+              <li>第 3 天：审核工作台 + 状态流转。</li>
+              <li>第 4 天：支付还款 + 中后台权限 + 原型工具。</li>
+              <li>第 5 天：完整项目 PRD + 原型整合和讲解。</li>
+            </ol>
+          </div>
+
+          <div class="card">
+            <h4>压缩时不要删</h4>
+            <ul>
+              <li>不要删状态机，它是中后台产品的骨架。</li>
+              <li>不要删指标字典，它决定你是不是只会画原型。</li>
+              <li>不要删异常流程，金融产品的真实复杂度常在异常里。</li>
+              <li>不要删权限与日志，这是中后台产品的底线能力。</li>
+              <li>不要删原型批注，它能证明你不是只会做视觉稿。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout danger">
+          <p>学习底线：所有金融产品案例仅用于产品学习与项目训练，不构成投资、信贷、法律或合规建议。真实业务必须结合所在地区监管要求、机构风控政策和合规审查。</p>
+        </div>
+      </section>
+
+      <p class="footer-note">建议使用方式：每天复制对应章节到自己的笔记里，完成当天输出物；第 7 天把所有输出物合并成作品集项目。页面风格参考训练营讲义结构，适合继续扩展成 Notion、飞书文档或作品集网页。</p>
+    </main>
+  </div>
+</body>
+</html>

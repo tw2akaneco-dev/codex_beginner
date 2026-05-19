@@ -5,6 +5,8 @@ const root = path.resolve(__dirname, "..");
 const outputDir = path.join(root, "日报", "output");
 const docsDir = path.join(root, "docs");
 const reportsDir = path.join(docsDir, "reports");
+const studyDir = path.join(root, "study");
+const docsStudyDir = path.join(docsDir, "study");
 
 function escapeHtml(value) {
   return String(value)
@@ -37,6 +39,28 @@ function inferType(name, title) {
   return "报告";
 }
 
+
+function copyStudyPages() {
+  if (!fs.existsSync(studyDir)) return [];
+
+  fs.mkdirSync(docsStudyDir, { recursive: true });
+
+  return fs
+    .readdirSync(studyDir)
+    .filter((name) => name.endsWith(".html"))
+    .sort()
+    .map((name) => {
+      const source = path.join(studyDir, name);
+      const target = path.join(docsStudyDir, name);
+      fs.copyFileSync(source, target);
+      return {
+        name,
+        title: readTitle(source),
+        href: `study/${encodeURIComponent(name)}`,
+      };
+    });
+}
+
 function ensureCleanDir(dir) {
   fs.rmSync(dir, { recursive: true, force: true });
   fs.mkdirSync(dir, { recursive: true });
@@ -49,6 +73,9 @@ function build() {
 
   fs.mkdirSync(docsDir, { recursive: true });
   ensureCleanDir(reportsDir);
+  ensureCleanDir(docsStudyDir);
+
+  const studyPages = copyStudyPages();
 
   const reports = fs
     .readdirSync(outputDir)
@@ -70,11 +97,26 @@ function build() {
     });
 
   fs.writeFileSync(path.join(docsDir, ".nojekyll"), "", "utf8");
-  fs.writeFileSync(path.join(docsDir, "index.html"), renderIndex(reports), "utf8");
+  fs.writeFileSync(path.join(docsDir, "index.html"), renderIndex(reports, studyPages), "utf8");
   console.log(`Built ${reports.length} report(s) into ${docsDir}`);
 }
 
-function renderIndex(reports) {
+function renderIndex(reports, studyPages) {
+  const studyCards = studyPages.length
+    ? studyPages
+        .map(
+          (page) => `<article class="report-card">
+            <div class="meta">
+              <span>产品学习</span>
+              <span>中后台实战</span>
+            </div>
+            <h2>${escapeHtml(page.title)}</h2>
+            <a href="${page.href}">打开学习指南</a>
+          </article>`
+        )
+        .join("\n")
+    : "";
+
   const cards = reports.length
     ? reports
         .map(
@@ -198,7 +240,7 @@ function renderIndex(reports) {
   <main>
     <div class="wrap">
       <div class="report-grid">
-        ${cards}
+        ${studyCards}\n        ${cards}
       </div>
       <footer>学习用途，不构成投资建议。</footer>
     </div>

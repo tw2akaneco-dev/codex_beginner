@@ -1,0 +1,2669 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>东方财富看盘入门讲义</title>
+  <style>
+    :root {
+      --ink: #182230;
+      --muted: #667085;
+      --line: #d9e2ef;
+      --paper: #ffffff;
+      --soft: #f6f8fb;
+      --soft-2: #edf4f7;
+      --brand: #0f766e;
+      --brand-dark: #115e59;
+      --accent: #9a3412;
+      --accent-soft: #fff4e6;
+      --blue: #1d4ed8;
+      --blue-soft: #eff6ff;
+      --green-soft: #ecfdf5;
+      --red-soft: #fff1f2;
+      --shadow: 0 18px 48px rgba(24, 34, 48, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #e8eef3;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", "Segoe UI", sans-serif;
+      line-height: 1.68;
+    }
+
+    a {
+      color: var(--brand-dark);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(15, 118, 110, 0.28);
+    }
+
+    a:hover {
+      color: var(--brand);
+      border-bottom-color: var(--brand);
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 32px auto;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      min-height: calc(100vh - 64px);
+      display: grid;
+      grid-template-columns: 286px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: #102a2a;
+      color: #e9f7f5;
+      padding: 28px 24px;
+      position: sticky;
+      top: 0;
+      align-self: start;
+      min-height: 100vh;
+    }
+
+    .sidebar h1 {
+      font-size: 23px;
+      line-height: 1.28;
+      margin: 0 0 12px;
+      letter-spacing: 0;
+    }
+
+    .sidebar .sub {
+      color: #b8d7d2;
+      font-size: 13px;
+      margin: 0 0 24px;
+    }
+
+    .nav-title {
+      color: #8ebcb6;
+      font-size: 12px;
+      font-weight: 700;
+      margin: 22px 0 8px;
+      text-transform: uppercase;
+    }
+
+    .sidebar ol,
+    .sidebar ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .sidebar li {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    .sidebar a {
+      color: #e9f7f5;
+      border-bottom: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #e9f7f5;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 12px;
+      margin: 2px 4px 2px 0;
+      white-space: nowrap;
+    }
+
+    main {
+      padding: 36px 46px 54px;
+      min-width: 0;
+    }
+
+    .cover {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 28px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      color: var(--brand-dark);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .cover h2 {
+      font-size: 38px;
+      line-height: 1.18;
+      margin: 0 0 14px;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      color: #344054;
+      font-size: 18px;
+      max-width: 780px;
+      margin: 0 0 18px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .meta {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 13px;
+      color: #344054;
+    }
+
+    section {
+      margin: 34px 0;
+    }
+
+    h2 {
+      font-size: 25px;
+      line-height: 1.28;
+      margin: 0 0 14px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin: 22px 0 10px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 9px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 16px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .callout {
+      border-left: 4px solid var(--brand);
+      background: var(--soft-2);
+      padding: 14px 16px;
+      margin: 16px 0;
+    }
+
+    .warning {
+      border-left-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .blue {
+      border-left-color: var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .formula {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      background: #111827;
+      color: #e5e7eb;
+      border-radius: 8px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 14px 0;
+      white-space: pre-wrap;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 10px 11px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: #f0f5f6;
+      color: #24333f;
+      font-weight: 800;
+    }
+
+    tbody tr:nth-child(even) td {
+      background: #fbfcfd;
+    }
+
+    .lesson {
+      border-top: 3px solid var(--brand);
+      padding-top: 18px;
+      break-inside: avoid;
+    }
+
+    .lesson-head {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .lesson-no {
+      color: var(--brand-dark);
+      font-weight: 900;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .lesson h3 {
+      margin: 0;
+      font-size: 21px;
+    }
+
+    .task-list {
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .task-list li {
+      position: relative;
+      padding-left: 29px;
+      margin: 8px 0;
+    }
+
+    .task-list li::before {
+      content: "";
+      width: 15px;
+      height: 15px;
+      border: 1.8px solid var(--brand);
+      border-radius: 4px;
+      position: absolute;
+      left: 0;
+      top: 6px;
+      background: #fff;
+    }
+
+    .note-lines {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 14px 0;
+    }
+
+    .note-lines div {
+      min-height: 34px;
+      border-bottom: 1px solid var(--line);
+      padding: 6px 10px;
+      color: #98a2b3;
+      font-size: 13px;
+    }
+
+    .note-lines div:last-child {
+      border-bottom: 0;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .pill {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 13px;
+      color: #344054;
+    }
+
+    .green-box,
+    .red-box,
+    .blue-box {
+      border-radius: 8px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+    }
+
+    .green-box {
+      background: var(--green-soft);
+    }
+
+    .red-box {
+      background: var(--red-soft);
+    }
+
+    .blue-box {
+      background: var(--blue-soft);
+    }
+
+    .template {
+      background: #fbfcfd;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 15px;
+      margin: 14px 0;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 40px;
+      padding-top: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        position: static;
+        min-height: auto;
+      }
+
+      main {
+        padding: 28px 22px 40px;
+      }
+
+      .cover h2 {
+        font-size: 30px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        display: block;
+        box-shadow: none;
+        max-width: none;
+        margin: 0;
+      }
+
+      .sidebar {
+        position: static;
+        min-height: auto;
+        color: var(--ink);
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        padding: 20px 0;
+      }
+
+      .sidebar a {
+        color: var(--ink);
+      }
+
+      .sidebar .sub,
+      .nav-title {
+        color: var(--muted);
+      }
+
+      .badge {
+        color: var(--ink);
+        border-color: var(--line);
+      }
+
+      main {
+        padding: 0;
+      }
+
+      section {
+        break-inside: avoid;
+      }
+
+      .lesson {
+        break-inside: avoid;
+      }
+
+      a {
+        color: var(--ink);
+        border-bottom: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar">
+      <h1>东方财富看盘入门讲义</h1>
+      <p class="sub">7 天训练营式讲义，已完整写入第 1-7 天。目标是看懂市场、建立观察系统，不是立刻交易。</p>
+      <span class="badge">7 天规划</span>
+      <span class="badge">已含 7 天</span>
+      <span class="badge">每日复盘</span>
+
+      <div class="nav-title">目录</div>
+      <ol>
+        <li><a href="#goal">学习目标</a></li>
+        <li><a href="#course-plan">课程总览</a></li>
+        <li><a href="#map">界面地图</a></li>
+        <li><a href="#index-guide">指数含义</a></li>
+        <li><a href="#glossary">常用词速查</a></li>
+        <li><a href="#order">看盘顺序</a></li>
+        <li><a href="#day1">第一天：市场全局</a></li>
+        <li><a href="#day2">第二天：个股页面</a></li>
+        <li><a href="#day3">第三天：跟踪系统</a></li>
+        <li><a href="#day4">第四天：量价强弱</a></li>
+        <li><a href="#day5">第五天：基本面</a></li>
+        <li><a href="#day6">第六天：风险组合</a></li>
+        <li><a href="#day7">第七天：综合复盘</a></li>
+        <li><a href="#routine">每日流程</a></li>
+        <li><a href="#templates">复盘模板</a></li>
+        <li><a href="#sources">参考资料</a></li>
+      </ol>
+
+      <div class="nav-title">核心口诀</div>
+      <ul>
+        <li>大盘定天气</li>
+        <li>板块定风向</li>
+        <li>个股看体质</li>
+        <li>成交量看真假</li>
+        <li>复盘看自己</li>
+      </ul>
+    </aside>
+
+    <main>
+      <div class="cover">
+        <div class="eyebrow">Beginner Lecture Notes</div>
+        <h2>东方财富新手看盘入门</h2>
+        <p class="lead">这份讲义把东方财富的行情中心、板块、个股页、分时图、K线、盘口、F10、基本面、风险管理和综合复盘，整理成一套完整的 7 天训练营式课程。</p>
+        <div class="meta-row">
+          <div class="meta">适合对象：想开始学习股市，但还不知道如何看盘的人</div>
+          <div class="meta">建议时长：每天 90-120 分钟</div>
+          <div class="meta">学习方式：边打开东方财富边填写模板</div>
+          <div class="meta">注意：仅用于学习，不构成投资建议</div>
+        </div>
+      </div>
+
+      <section id="goal">
+        <h2>一、学习目标</h2>
+        <p>这套讲义规划为 7 天训练营。前四天解决“怎么看盘、怎么跟踪、怎么描述强弱”，后三天进入“基本面、风险管理、模拟组合和综合复盘”。整套训练不追求预测涨跌，也不训练激进买卖点，核心是建立稳定的观察框架。</p>
+        <div class="grid">
+          <div class="card">
+            <h3>你要学会</h3>
+            <ul>
+              <li>识别东方财富的核心模块：行情、指数、板块、自选、个股、F10。</li>
+              <li>用固定顺序观察市场：大盘、涨跌家数、成交额、板块、个股。</li>
+              <li>判断当天市场是偏强、偏弱，还是震荡。</li>
+              <li>用复盘模板把观察变成自己的判断。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>你暂时不做</h3>
+            <ul>
+              <li>不根据一天涨跌做实盘交易。</li>
+              <li>不沉迷荐股、打板、龙虎榜、复杂指标。</li>
+              <li>不把“主力净流入”等单一数据当成结论。</li>
+              <li>不急着判断某只股票能不能买。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="formula">市场环境判断 → 资金方向判断 → 个股强弱判断 → 自我情绪复盘</div>
+      </section>
+
+      <section id="course-plan">
+        <h2>课程总览：总共 7 天</h2>
+        <p>整份讲义共 7 天。第 1-4 天解决“怎么看盘、怎么跟踪、怎么描述强弱”；第 5-7 天进入“基本面、风险管理、模拟组合和综合复盘”。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>天数</th>
+              <th>主题</th>
+              <th>训练目标</th>
+              <th>当前状态</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>第 1 天</td>
+              <td>市场全局</td>
+              <td>看指数、涨跌家数、成交额和板块，判断市场环境。</td>
+              <td>已写入</td>
+            </tr>
+            <tr>
+              <td>第 2 天</td>
+              <td>个股页面</td>
+              <td>看分时、日K、成交量、盘口和 F10，判断个股强弱。</td>
+              <td>已写入</td>
+            </tr>
+            <tr>
+              <td>第 3 天</td>
+              <td>自选股与板块跟踪系统</td>
+              <td>建立观察池、板块跟踪表和三日连续观察法。</td>
+              <td>已写入</td>
+            </tr>
+            <tr>
+              <td>第 4 天</td>
+              <td>量价趋势与强弱对比</td>
+              <td>用趋势、位置、成交量、相对强弱描述股票状态。</td>
+              <td>已写入</td>
+            </tr>
+            <tr>
+              <td>第 5 天</td>
+              <td>F10 与基本面入门</td>
+              <td>理解公司业务、营收利润、现金流、估值和行业地位。</td>
+              <td>已写入</td>
+            </tr>
+            <tr>
+              <td>第 6 天</td>
+              <td>风险管理与模拟组合</td>
+              <td>学习仓位、止损、分批、ETF 和模拟持仓记录。</td>
+              <td>已写入</td>
+            </tr>
+            <tr>
+              <td>第 7 天</td>
+              <td>综合复盘与学习闭环</td>
+              <td>完成一份完整周复盘，形成后续每日学习流程。</td>
+              <td>已写入</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          <strong>当前进度：</strong>这份 HTML 现在包含第 1-7 天的完整讲义。学完后建议继续保持每日复盘，并每周做一次完整周复盘。
+        </div>
+      </section>
+
+      <section id="map">
+        <h2>二、东方财富界面地图</h2>
+        <p>东方财富可以理解成一个市场仪表盘。新手最容易被功能数量吓住，所以先把界面分成四层。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>层级</th>
+              <th>常见入口</th>
+              <th>你要理解的问题</th>
+              <th>新手优先级</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>行情层</td>
+              <td>行情、指数、个股、板块、排行、自选股</td>
+              <td>今天市场涨跌如何？哪些方向强？</td>
+              <td>最高</td>
+            </tr>
+            <tr>
+              <td>数据层</td>
+              <td>资金流向、龙虎榜、融资融券、估值分析</td>
+              <td>资金和交易结构有什么线索？</td>
+              <td>先浅看</td>
+            </tr>
+            <tr>
+              <td>个股层</td>
+              <td>分时图、日K、成交量、盘口、资讯、F10</td>
+              <td>这只股票比市场强还是弱？为什么？</td>
+              <td>高</td>
+            </tr>
+              <tr>
+                <td>交易层</td>
+                <td>买入、卖出、持仓、委托</td>
+                <td>如何执行交易？</td>
+                <td>前四天内不学</td>
+              </tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          <strong>学习原则：</strong>先把行情层和个股层看明白，再去学资金流、龙虎榜、融资融券等更细的数据。基础顺序稳定以后，复杂功能才会变成辅助，而不是噪音。
+        </div>
+      </section>
+
+      <section id="index-guide">
+        <h2>三、指数含义速查</h2>
+        <p>指数可以理解成一组股票的“综合成绩单”。一只股票只能代表一家公司，指数代表一类股票或一个市场。看指数的目的，不是预测某只股票，而是先判断市场环境。</p>
+        <div class="callout">
+          <strong>一句话理解：</strong>指数上涨，说明这组股票整体变贵了；指数下跌，说明这组股票整体变便宜了。指数点位本身不是重点，重点是涨跌幅、成交额、趋势位置，以及不同指数之间谁更强。
+        </div>
+
+        <h3>指数为什么重要</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>作用</th>
+              <th>你要解决的问题</th>
+              <th>例子</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>判断市场温度</td>
+              <td>今天市场整体偏强、偏弱，还是震荡？</td>
+              <td>上证、创业板、沪深300多数上涨，说明环境相对更暖。</td>
+            </tr>
+            <tr>
+              <td>判断风格偏好</td>
+              <td>资金喜欢大盘股，还是中小盘成长股？</td>
+              <td>沪深300强于中证1000，可能是大盘权重占优。</td>
+            </tr>
+            <tr>
+              <td>对比个股强弱</td>
+              <td>一只股票是真的强，还是只是跟着市场涨？</td>
+              <td>大盘涨1%，个股涨0.2%，它其实弱于市场。</td>
+            </tr>
+            <tr>
+              <td>选择观察工具</td>
+              <td>不想研究个股时，看什么更合适？</td>
+              <td>可以观察跟踪指数的 ETF，例如沪深300ETF、中证500ETF。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>A股常见指数</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>指数</th>
+              <th>它大致代表什么</th>
+              <th>适合观察什么</th>
+              <th>新手怎么用</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>上证指数</td>
+              <td>上海证券交易所上市股票的整体表现，传统行业和大盘股权重较高。</td>
+              <td>主板、大盘、权重股环境。</td>
+              <td>用来看“市场大面上是否稳”。</td>
+            </tr>
+            <tr>
+              <td>深证成指</td>
+              <td>深圳市场中有代表性股票的表现，成长属性通常比上证更强。</td>
+              <td>深圳市场、成长股氛围。</td>
+              <td>和上证对比，观察成长方向是否更活跃。</td>
+            </tr>
+            <tr>
+              <td>创业板指</td>
+              <td>创业板代表性股票的表现，科技、医药、新能源等成长行业占比较高。</td>
+              <td>风险偏好、成长风格、题材活跃度。</td>
+              <td>创业板强，通常说明市场更愿意买成长和弹性。</td>
+            </tr>
+            <tr>
+              <td>科创50</td>
+              <td>科创板中市值较大、流动性较好的 50 只股票。</td>
+              <td>半导体、硬科技、创新药等科技方向。</td>
+              <td>用来观察硬科技主线是否强。</td>
+            </tr>
+            <tr>
+              <td>沪深300</td>
+              <td>沪深两市规模大、流动性好的 300 只核心股票。</td>
+              <td>大盘蓝筹、核心资产、机构偏好。</td>
+              <td>沪深300强，说明大盘核心资产更受资金关注。</td>
+            </tr>
+            <tr>
+              <td>中证500</td>
+              <td>剔除沪深300后，规模居前的一批中盘股票。</td>
+              <td>中盘股表现。</td>
+              <td>和沪深300对比，判断中盘是否更有弹性。</td>
+            </tr>
+            <tr>
+              <td>中证1000</td>
+              <td>规模更偏小的一批上市公司。</td>
+              <td>小盘股、题材股、市场活跃度。</td>
+              <td>中证1000强，常说明短线题材和小盘风格更活跃。</td>
+            </tr>
+            <tr>
+              <td>万得全A / 中证全指</td>
+              <td>A股整体样本，覆盖面更广。</td>
+              <td>全市场真实涨跌状态。</td>
+              <td>如果能看到，可用它辅助判断整体市场。</td>
+            </tr>
+            <tr>
+              <td>北证50</td>
+              <td>北京证券交易所代表性股票。</td>
+              <td>北交所、小微创新企业方向。</td>
+              <td>波动较大，新手先作为了解，不作为主观察对象。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>海外常见指数</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>指数</th>
+              <th>代表什么</th>
+              <th>为什么值得知道</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>恒生指数</td>
+              <td>港股市场核心股票。</td>
+              <td>很多中国互联网、金融、地产公司在港股上市，港股情绪会影响A股相关板块。</td>
+            </tr>
+            <tr>
+              <td>恒生科技指数</td>
+              <td>港股科技公司。</td>
+              <td>观察互联网平台、科技成长方向的情绪。</td>
+            </tr>
+            <tr>
+              <td>标普500</td>
+              <td>美国大盘核心股票。</td>
+              <td>全球风险偏好的重要参考。</td>
+            </tr>
+            <tr>
+              <td>纳斯达克指数</td>
+              <td>美国科技成长股较多。</td>
+              <td>对半导体、AI、科技成长等方向有情绪参考价值。</td>
+            </tr>
+            <tr>
+              <td>道琼斯指数</td>
+              <td>美国传统大型公司。</td>
+              <td>反映美国传统蓝筹表现，但覆盖数量较少。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>看指数时不要误解</h3>
+        <div class="grid">
+          <div class="card">
+            <h3>指数涨，不等于所有股票都涨</h3>
+            <p>有时少数权重股上涨，就能把指数拉红，但大多数股票可能仍在下跌。所以一定要配合上涨家数、下跌家数一起看。</p>
+          </div>
+          <div class="card">
+            <h3>指数跌，不等于没有机会</h3>
+            <p>如果指数下跌，但某些板块明显走强，这叫结构性行情。新手先观察，不急着参与。</p>
+          </div>
+          <div class="card">
+            <h3>点位不是核心，变化才是核心</h3>
+            <p>比如上证 3000 点本身没有神秘意义，更重要的是它最近在上升、下降，还是横盘。</p>
+          </div>
+          <div class="card">
+            <h3>指数 ETF 是跟踪指数的工具</h3>
+            <p>如果你买的是沪深300ETF，本质上是在买一篮子沪深300成分股，而不是押注单家公司。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="glossary">
+        <h2>四、股市常用词速查</h2>
+        <p>下面这些词会在行情软件、财经新闻和复盘里高频出现。你先不需要背下来，遇到时回来查，慢慢就熟了。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>术语</th>
+              <th>通俗含义</th>
+              <th>看盘时怎么用</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>普涨</td>
+              <td>大多数股票都上涨，不只是指数上涨。</td>
+              <td>看上涨家数明显多于下跌家数，说明市场赚钱效应较好。</td>
+            </tr>
+            <tr>
+              <td>普跌</td>
+              <td>大多数股票都下跌。</td>
+              <td>下跌家数明显多，说明整体风险偏高，先控制冲动。</td>
+            </tr>
+            <tr>
+              <td>震荡</td>
+              <td>指数或个股在一个区间内上下波动，没有明确方向。</td>
+              <td>震荡市里不要把一天上涨当成趋势反转。</td>
+            </tr>
+            <tr>
+              <td>结构性行情</td>
+              <td>市场整体一般，但少数行业或主题很强。</td>
+              <td>指数不强时，更要看板块分化。</td>
+            </tr>
+            <tr>
+              <td>权重股</td>
+              <td>市值大、对指数影响大的股票。</td>
+              <td>指数上涨但多数股票不涨，可能是权重股在拉指数。</td>
+            </tr>
+            <tr>
+              <td>蓝筹股</td>
+              <td>规模大、经营较稳定、行业地位较强的公司。</td>
+              <td>常见于银行、消费、能源、保险等方向。</td>
+            </tr>
+            <tr>
+              <td>成长股</td>
+              <td>市场预期未来收入和利润增长较快的公司。</td>
+              <td>通常波动更大，容易受风险偏好影响。</td>
+            </tr>
+            <tr>
+              <td>题材股</td>
+              <td>因为某个热点概念、政策或事件被关注的股票。</td>
+              <td>短期弹性大，但持续性需要反复验证。</td>
+            </tr>
+            <tr>
+              <td>龙头股</td>
+              <td>某个板块里最有代表性、最受资金关注的股票。</td>
+              <td>看板块时可以观察龙头，但不要直接追涨。</td>
+            </tr>
+            <tr>
+              <td>跟风股</td>
+              <td>因为板块热度被带着上涨，但自身强度较弱的股票。</td>
+              <td>如果板块降温，跟风股通常更容易回落。</td>
+            </tr>
+            <tr>
+              <td>放量</td>
+              <td>成交量明显比前几天更大。</td>
+              <td>说明交易活跃，可能有新资金或分歧加大。</td>
+            </tr>
+            <tr>
+              <td>缩量</td>
+              <td>成交量明显变小。</td>
+              <td>说明交易变冷清，市场观望情绪可能增强。</td>
+            </tr>
+            <tr>
+              <td>成交额</td>
+              <td>成交金额总量。</td>
+              <td>用来判断市场或板块是否真的有资金参与。</td>
+            </tr>
+            <tr>
+              <td>换手率</td>
+              <td>股票在一定时间内被买卖的活跃程度。</td>
+              <td>换手率高说明交易活跃，但也可能意味着短线分歧大。</td>
+            </tr>
+            <tr>
+              <td>量比</td>
+              <td>当天成交速度相对过去平均水平的放大倍数。</td>
+              <td>量比高说明今天突然活跃，但不等于一定上涨。</td>
+            </tr>
+            <tr>
+              <td>高开</td>
+              <td>今天开盘价高于昨天收盘价。</td>
+              <td>可能说明开盘情绪较强，但要看是否高开低走。</td>
+            </tr>
+            <tr>
+              <td>低开</td>
+              <td>今天开盘价低于昨天收盘价。</td>
+              <td>可能说明开盘情绪较弱，但要看是否低开高走。</td>
+            </tr>
+            <tr>
+              <td>冲高回落</td>
+              <td>盘中一度上涨，后来又回落。</td>
+              <td>说明上方可能有抛压，不能只看最高点。</td>
+            </tr>
+            <tr>
+              <td>低开高走</td>
+              <td>低开后逐步上涨。</td>
+              <td>说明盘中承接较强，情绪可能修复。</td>
+            </tr>
+            <tr>
+              <td>高开低走</td>
+              <td>高开后逐步下跌。</td>
+              <td>说明开盘强势没有持续，短线要谨慎。</td>
+            </tr>
+            <tr>
+              <td>拉升</td>
+              <td>价格短时间明显上涨。</td>
+              <td>先看成交量和板块是否配合，不要只被速度吸引。</td>
+            </tr>
+            <tr>
+              <td>跳水</td>
+              <td>价格短时间明显下跌。</td>
+              <td>观察是个股问题、板块问题，还是大盘一起下跌。</td>
+            </tr>
+            <tr>
+              <td>回调</td>
+              <td>上涨一段后出现下跌休整。</td>
+              <td>回调不一定是坏事，要看是否破坏趋势。</td>
+            </tr>
+            <tr>
+              <td>反弹</td>
+              <td>下跌一段后出现上涨。</td>
+              <td>反弹不等于趋势反转，尤其要看成交量。</td>
+            </tr>
+            <tr>
+              <td>突破</td>
+              <td>价格涨过前期重要压力位置。</td>
+              <td>突破最好配合放量，并观察后续能否站稳。</td>
+            </tr>
+            <tr>
+              <td>跌破</td>
+              <td>价格跌破前期重要支撑位置。</td>
+              <td>说明弱势加重，但也要看是否快速收回。</td>
+            </tr>
+            <tr>
+              <td>支撑位</td>
+              <td>过去下跌时容易止跌的位置。</td>
+              <td>只是一种观察区域，不是绝对安全线。</td>
+            </tr>
+            <tr>
+              <td>压力位</td>
+              <td>过去上涨时容易遇到卖压的位置。</td>
+              <td>接近压力位时观察成交量和回落情况。</td>
+            </tr>
+            <tr>
+              <td>板块轮动</td>
+              <td>资金从一个板块转向另一个板块。</td>
+              <td>连续记录强势板块，能帮助你感受资金迁移。</td>
+            </tr>
+            <tr>
+              <td>赚钱效应</td>
+              <td>市场里上涨股票多、涨幅好，参与者更容易赚钱。</td>
+              <td>看涨跌家数、涨停数量、强势板块持续性。</td>
+            </tr>
+            <tr>
+              <td>亏钱效应</td>
+              <td>市场里下跌股票多，追涨容易亏。</td>
+              <td>新手遇到亏钱效应强时，重点做观察和复盘。</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="order">
+        <h2>五、总看盘顺序</h2>
+        <p>每天打开东方财富后，按下面这个顺序。这个顺序会帮你避免一上来盯着单只股票，被涨跌牵着走。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>顺序</th>
+              <th>看什么</th>
+              <th>核心问题</th>
+              <th>记录方式</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>指数</td>
+              <td>市场整体强不强？</td>
+              <td>记录主要指数涨跌幅</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>涨跌家数</td>
+              <td>是普涨、普跌，还是局部行情？</td>
+              <td>记录上涨家数、下跌家数</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>成交额</td>
+              <td>资金参与是否积极？</td>
+              <td>记录两市成交额及变化</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>板块</td>
+              <td>资金偏向哪些行业或概念？</td>
+              <td>记录强弱板块</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>个股</td>
+              <td>这只股票是否强于大盘和板块？</td>
+              <td>记录分时、日K、成交量</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>消息与 F10</td>
+              <td>涨跌有没有基本原因？公司做什么？</td>
+              <td>写一句原因假设</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>复盘</td>
+              <td>我看到的是数据，还是情绪？</td>
+              <td>填写模板</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="formula">大盘定天气，板块定风向，个股看体质，成交量看真假，复盘看自己。</div>
+      </section>
+
+      <section id="day1">
+        <h2>六、第一天：看懂市场全局</h2>
+        <p>第一天的目标是判断“今天市场整体怎么样”。建议安排 90 分钟。</p>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 1 课｜20 分钟</div>
+            <h3>认识行情页</h3>
+          </div>
+          <p>进入东方财富的 <strong>行情</strong> 或网页版 <strong>行情中心</strong>。先找到这些入口：指数、个股、板块、行业、概念、排行、自选股、资金流向。</p>
+          <div class="pill-row">
+            <span class="pill">指数</span>
+            <span class="pill">板块</span>
+            <span class="pill">自选股</span>
+            <span class="pill">涨幅榜</span>
+            <span class="pill">跌幅榜</span>
+          </div>
+          <ul class="task-list">
+            <li>打开东方财富，找到“指数”入口。</li>
+            <li>找到“行业板块”和“概念板块”入口。</li>
+            <li>找到“自选股”入口。</li>
+            <li>找到“涨幅榜”和“跌幅榜”入口。</li>
+          </ul>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 2 课｜30 分钟</div>
+            <h3>看指数</h3>
+          </div>
+          <p>指数是市场温度计。每天固定看这些指数：</p>
+          <table>
+            <thead>
+              <tr>
+                <th>指数</th>
+                <th>大致代表</th>
+                <th>观察重点</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>上证指数</td>
+                <td>上海市场整体，偏传统大盘股</td>
+                <td>主板权重是否稳定</td>
+              </tr>
+              <tr>
+                <td>深证成指</td>
+                <td>深圳市场整体，成长属性更强</td>
+                <td>成长股环境</td>
+              </tr>
+              <tr>
+                <td>创业板指</td>
+                <td>成长股、科技股、创新型公司较多</td>
+                <td>风险偏好是否提升</td>
+              </tr>
+              <tr>
+                <td>科创50</td>
+                <td>硬科技、科创板代表</td>
+                <td>科技主线强弱</td>
+              </tr>
+              <tr>
+                <td>沪深300</td>
+                <td>A股大盘核心资产</td>
+                <td>大盘蓝筹强弱</td>
+              </tr>
+              <tr>
+                <td>中证500 / 中证1000</td>
+                <td>中小盘股票代表</td>
+                <td>题材与中小盘活跃度</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="grid">
+            <div class="green-box">
+              <strong>偏强信号</strong>
+              <p>主要指数普遍上涨，成交额放大，上涨家数较多，创业板或中小盘指数表现活跃。</p>
+            </div>
+            <div class="red-box">
+              <strong>偏弱信号</strong>
+              <p>主要指数普遍下跌，成交额放大，下跌家数明显更多，强势板块持续性差。</p>
+            </div>
+          </div>
+          <ul class="task-list">
+            <li>记录今天上证、创业板、沪深300、中证1000分别涨跌多少。</li>
+            <li>判断今天是大盘股更强，还是小盘股更强。</li>
+            <li>用一句话描述市场：偏强、偏弱，还是震荡。</li>
+          </ul>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 3 课｜20 分钟</div>
+            <h3>看涨跌家数和成交额</h3>
+          </div>
+          <p>指数只告诉你“市场表面涨跌”，涨跌家数告诉你“多数股票到底怎么样”。成交额则告诉你资金参与是否积极。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>现象</th>
+                <th>可能含义</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>指数涨，上涨家数多</td>
+                <td>市场更健康，普涨概率高</td>
+              </tr>
+              <tr>
+                <td>指数涨，上涨家数少</td>
+                <td>可能是权重股拉指数，普通股票未必强</td>
+              </tr>
+              <tr>
+                <td>指数跌，上涨家数不少</td>
+                <td>局部机会仍在，结构性行情</td>
+              </tr>
+              <tr>
+                <td>指数跌，下跌家数很多</td>
+                <td>整体风险偏高</td>
+              </tr>
+              <tr>
+                <td>上涨放量</td>
+                <td>资金更积极</td>
+              </tr>
+              <tr>
+                <td>下跌放量</td>
+                <td>卖压更明显</td>
+              </tr>
+            </tbody>
+          </table>
+          <ul class="task-list">
+            <li>记录今天两市成交额。</li>
+            <li>记录上涨家数和下跌家数。</li>
+            <li>判断今天是普涨、普跌，还是局部行情。</li>
+          </ul>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 4 课｜30 分钟</div>
+            <h3>看板块</h3>
+          </div>
+          <p>板块用于判断资金偏好的方向。你重点看行业板块和概念板块。</p>
+          <div class="grid">
+            <div class="card">
+              <h3>行业板块</h3>
+              <p>更像现实产业分类，例如银行、证券、半导体、医药、白酒、新能源、汽车、房地产、军工。</p>
+            </div>
+            <div class="card">
+              <h3>概念板块</h3>
+              <p>更像市场主题分类，例如人工智能、机器人、低空经济、算力、固态电池、国企改革。</p>
+            </div>
+          </div>
+          <p>记录时不要只看“涨幅最大”，还要看成交额和成分股普涨程度。</p>
+          <div class="callout blue">
+            <strong>判断板块强弱的三个问题：</strong>
+            <p>这个板块是第一次强，还是连续几天强？板块内是多数股票上涨，还是只有一两只股票上涨？成交额是否靠前，说明资金关注度较高？</p>
+          </div>
+          <ul class="task-list">
+            <li>找出今天最强的 3 个行业板块。</li>
+            <li>找出今天最强的 3 个概念板块。</li>
+            <li>各挑 1 只代表股加入自选，不买，只观察。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="day2">
+        <h2>七、第二天：看懂个股页面</h2>
+        <p>第二天的目标是判断“一只股票今天强不强，为什么强”。建议安排 90-120 分钟。</p>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 5 课｜20 分钟</div>
+            <h3>建立自选股观察池</h3>
+          </div>
+          <p>你的自选股不是购物车，而是观察名单。第一批建议放 10 个左右，覆盖指数、蓝筹、成长、强势板块代表。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>类别</th>
+                <th>数量</th>
+                <th>目的</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>上证指数相关 ETF</td>
+                <td>1</td>
+                <td>观察主板环境</td>
+              </tr>
+              <tr>
+                <td>沪深300 ETF</td>
+                <td>1</td>
+                <td>观察核心资产</td>
+              </tr>
+              <tr>
+                <td>中证500 ETF</td>
+                <td>1</td>
+                <td>观察中盘股</td>
+              </tr>
+              <tr>
+                <td>证券、银行、消费</td>
+                <td>各 1</td>
+                <td>观察权重和传统行业</td>
+              </tr>
+              <tr>
+                <td>科技、新能源、医药</td>
+                <td>各 1</td>
+                <td>观察成长行业</td>
+              </tr>
+              <tr>
+                <td>当天强势板块代表股</td>
+                <td>1</td>
+                <td>跟踪资金热点</td>
+              </tr>
+            </tbody>
+          </table>
+          <ul class="task-list">
+            <li>建立一个“新手观察池”自选分组。</li>
+            <li>添加 8-12 个观察标的。</li>
+            <li>每天只观察强弱，不做买卖决定。</li>
+          </ul>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 6 课｜25 分钟</div>
+            <h3>看分时图</h3>
+          </div>
+          <p>分时图看的是当天交易过程。你不需要一开始就研究复杂盘口，只回答五个问题。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>观察点</th>
+                <th>你要问的问题</th>
+                <th>简单解释</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>开盘</td>
+                <td>高开、低开，还是平开？</td>
+                <td>反映开盘情绪</td>
+              </tr>
+              <tr>
+                <td>方向</td>
+                <td>开盘后向上、向下，还是横盘？</td>
+                <td>反映资金当天态度</td>
+              </tr>
+              <tr>
+                <td>均价线</td>
+                <td>价格多数时间在均价线上方还是下方？</td>
+                <td>上方偏强，下方偏弱</td>
+              </tr>
+              <tr>
+                <td>午后变化</td>
+                <td>有没有明显拉升或跳水？</td>
+                <td>观察资金是否改变看法</td>
+              </tr>
+              <tr>
+                <td>对比大盘</td>
+                <td>走势是否强于大盘分时？</td>
+                <td>判断个股相对强弱</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="grid">
+            <div class="green-box">
+              <strong>常见偏强形态</strong>
+              <p>低开高走、全天多数时间在均价线上方、回落不破均价线、尾盘仍能保持强势。</p>
+            </div>
+            <div class="red-box">
+              <strong>常见偏弱形态</strong>
+              <p>高开低走、冲高回落、全天多数时间在均价线下方、尾盘跳水。</p>
+            </div>
+          </div>
+          <ul class="task-list">
+            <li>选一只今天涨的股票，判断它是一路走强还是冲高回落。</li>
+            <li>选一只今天跌的股票，判断它是一路走弱还是低位震荡。</li>
+            <li>把它们和大盘分时做对比。</li>
+          </ul>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 7 课｜35 分钟</div>
+            <h3>看日K线和成交量</h3>
+          </div>
+          <p>K线看的是一段时间的走势。新手先只看最近 20 个交易日，先建立日线视角。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>问题</th>
+                <th>可选答案</th>
+                <th>意义</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>趋势</td>
+                <td>向上 / 向下 / 横盘</td>
+                <td>判断当前运动方向</td>
+              </tr>
+              <tr>
+                <td>位置</td>
+                <td>高位 / 中位 / 低位</td>
+                <td>判断风险和弹性</td>
+              </tr>
+              <tr>
+                <td>量能</td>
+                <td>放量 / 缩量 / 平量</td>
+                <td>判断资金参与程度</td>
+              </tr>
+              <tr>
+                <td>行为</td>
+                <td>突破 / 跌破 / 震荡</td>
+                <td>判断是否出现变化</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>K线基础</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>形态</th>
+                <th>含义</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>阳线</td>
+                <td>收盘价高于开盘价，当天买方相对更强</td>
+              </tr>
+              <tr>
+                <td>阴线</td>
+                <td>收盘价低于开盘价，当天卖方相对更强</td>
+              </tr>
+              <tr>
+                <td>长上影线</td>
+                <td>冲高后回落，说明上方压力存在</td>
+              </tr>
+              <tr>
+                <td>长下影线</td>
+                <td>下跌后拉回，说明下方有承接</td>
+              </tr>
+              <tr>
+                <td>连续小K线</td>
+                <td>多空暂时平衡，等待方向选择</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>成交量基础</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>量价组合</th>
+                <th>常见解释</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>上涨放量</td>
+                <td>买盘积极，关注是否能持续</td>
+              </tr>
+              <tr>
+                <td>上涨缩量</td>
+                <td>追买不足，谨慎看待反弹质量</td>
+              </tr>
+              <tr>
+                <td>下跌放量</td>
+                <td>卖压明显，短期风险上升</td>
+              </tr>
+              <tr>
+                <td>下跌缩量</td>
+                <td>抛压可能减弱，但不等于马上上涨</td>
+              </tr>
+              <tr>
+                <td>横盘缩量</td>
+                <td>等待方向选择</td>
+              </tr>
+              <tr>
+                <td>突破放量</td>
+                <td>突破可信度提高，但仍需观察能否站稳</td>
+              </tr>
+            </tbody>
+          </table>
+          <ul class="task-list">
+            <li>找一只强势板块里的股票，看最近 20 个交易日。</li>
+            <li>判断它是上涨趋势、下跌趋势，还是横盘。</li>
+            <li>判断今天成交量是否明显高于最近几天。</li>
+          </ul>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 8 课｜30 分钟</div>
+            <h3>看盘口和 F10</h3>
+          </div>
+          <p>盘口用于看交易活跃度，F10 用于快速了解公司基本情况。新手只看核心项目。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>盘口字段</th>
+                <th>你要理解什么</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>现价 / 涨跌幅</td>
+                <td>当前价格表现</td>
+              </tr>
+              <tr>
+                <td>成交额</td>
+                <td>市场关注度和流动性</td>
+              </tr>
+              <tr>
+                <td>换手率</td>
+                <td>交易是否活跃</td>
+              </tr>
+              <tr>
+                <td>量比</td>
+                <td>今天成交相对平时是否明显放大</td>
+              </tr>
+              <tr>
+                <td>买一到买五 / 卖一到卖五</td>
+                <td>当前买卖盘挂单情况，先浅看即可</td>
+              </tr>
+            </tbody>
+          </table>
+          <table>
+            <thead>
+              <tr>
+                <th>F10 项目</th>
+                <th>你要回答的问题</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>主营业务</td>
+                <td>公司到底做什么？我是否看得懂？</td>
+              </tr>
+              <tr>
+                <td>财务摘要</td>
+                <td>收入、利润是否大致稳定？</td>
+              </tr>
+              <tr>
+                <td>行业地位</td>
+                <td>它是不是行业里比较重要的公司？</td>
+              </tr>
+              <tr>
+                <td>股东情况</td>
+                <td>是否有机构或长期资金关注？</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout warning">
+            <strong>重要提醒：</strong>主力资金、盘口挂单、量比等数据只能作为线索，不能单独作为买卖理由。新手阶段先学会描述现象，再慢慢学习解释。
+          </div>
+        </div>
+      </section>
+
+      <section id="day3">
+        <h2>八、第三天：建立自选股与板块跟踪系统</h2>
+        <p>第三天的目标不是增加更多股票，而是把观察对象分层管理。你要从“看到什么点什么”变成“每天固定观察一组市场样本”。建议安排 90-120 分钟。</p>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 9 课｜25 分钟</div>
+            <h3>自选股不是购物车</h3>
+          </div>
+          <p>很多新手把自选股当成“想买清单”，这样很容易越看越冲动。更好的做法是把自选股当作观察仪表盘：指数看环境，ETF看风格，行业代表股看板块，个股样本看强弱。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>分组</th>
+                <th>建议数量</th>
+                <th>放什么</th>
+                <th>目的</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>指数观察</td>
+                <td>3-5 个</td>
+                <td>上证、创业板、沪深300ETF、中证500ETF、中证1000ETF</td>
+                <td>判断市场和风格。</td>
+              </tr>
+              <tr>
+                <td>行业代表</td>
+                <td>6-10 个</td>
+                <td>银行、证券、消费、医药、科技、新能源、资源等代表股或 ETF</td>
+                <td>看不同板块谁强谁弱。</td>
+              </tr>
+              <tr>
+                <td>当日强势</td>
+                <td>3-5 个</td>
+                <td>当天强势板块里的代表股</td>
+                <td>观察热点是否有持续性。</td>
+              </tr>
+              <tr>
+                <td>学习样本</td>
+                <td>3-5 个</td>
+                <td>你看得懂业务的公司</td>
+                <td>训练 F10、财务和基本面阅读。</td>
+              </tr>
+              <tr>
+                <td>反面样本</td>
+                <td>2-3 个</td>
+                <td>走势很弱、放量下跌或高位回落的股票</td>
+                <td>学习风险信号。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout">
+            <strong>今天的原则：</strong>自选股数量先控制在 20-30 个以内。太少看不出市场结构，太多会变成信息噪音。
+          </div>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 10 课｜30 分钟</div>
+            <h3>建立板块跟踪表</h3>
+          </div>
+          <p>板块跟踪的关键不是只记录“今天谁涨最多”，而是观察一个方向是否连续强、是否有成交额、是否有多只股票一起表现。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>记录项</th>
+                <th>怎么填</th>
+                <th>为什么重要</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>板块名称</td>
+                <td>行业或概念名称，例如半导体、证券、机器人。</td>
+                <td>明确你观察的对象。</td>
+              </tr>
+              <tr>
+                <td>今日涨跌幅</td>
+                <td>记录板块涨跌幅和排名。</td>
+                <td>判断当天强弱。</td>
+              </tr>
+              <tr>
+                <td>成交额排名</td>
+                <td>看是否排在市场前列。</td>
+                <td>有成交额才说明资金关注度较高。</td>
+              </tr>
+              <tr>
+                <td>成分股表现</td>
+                <td>记录是多数上涨，还是只有少数龙头上涨。</td>
+                <td>判断板块是群体性行情还是个股行情。</td>
+              </tr>
+              <tr>
+                <td>连续性</td>
+                <td>记录连续强势 1 天、2 天还是 3 天。</td>
+                <td>持续性比单日爆发更重要。</td>
+              </tr>
+              <tr>
+                <td>代表股</td>
+                <td>记录 1-3 只板块代表股。</td>
+                <td>后续用个股验证板块强度。</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>三日连续观察法</h3>
+          <div class="formula">第 1 天：发现板块很强
+第 2 天：观察它是否继续强，还是一日游
+第 3 天：观察强势是否扩散，还是开始分化</div>
+          <p>一个板块如果只强一天，可能只是消息刺激；如果连续三天都能维持强度，并且板块内多只股票轮流表现，才更值得纳入重点观察。</p>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 11 课｜25 分钟</div>
+            <h3>给自选股做每日标记</h3>
+          </div>
+          <p>每天看自选股时，不要逐只写长篇分析。先给它们打一个简单标签，训练自己快速识别状态。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>标签</th>
+                <th>含义</th>
+                <th>例子</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>强于大盘</td>
+                <td>大盘跌或小涨，它明显上涨或更抗跌。</td>
+                <td>指数跌 0.3%，个股涨 2%。</td>
+              </tr>
+              <tr>
+                <td>弱于大盘</td>
+                <td>大盘小跌，它明显大跌；或大盘涨，它不涨。</td>
+                <td>指数涨 0.5%，个股跌 2%。</td>
+              </tr>
+              <tr>
+                <td>板块带动</td>
+                <td>它上涨主要因为所在板块整体上涨。</td>
+                <td>半导体板块普涨，个股跟随上涨。</td>
+              </tr>
+              <tr>
+                <td>独立走强</td>
+                <td>板块一般，但它自己明显强。</td>
+                <td>同行没怎么涨，它放量突破。</td>
+              </tr>
+              <tr>
+                <td>高位分歧</td>
+                <td>涨过一段后放量震荡或冲高回落。</td>
+                <td>当天成交放大，但收长上影线。</td>
+              </tr>
+              <tr>
+                <td>低位修复</td>
+                <td>下跌后开始企稳或低开高走。</td>
+                <td>连续下跌后缩量止跌。</td>
+              </tr>
+            </tbody>
+          </table>
+          <ul class="task-list">
+            <li>给你的自选股建立 3-5 个分组。</li>
+            <li>从今日强势板块中挑 3 只代表股加入“当日强势”。</li>
+            <li>每天只给每只股票写一个标签，不写长篇分析。</li>
+          </ul>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 12 课｜20 分钟</div>
+            <h3>第三天复盘模板</h3>
+          </div>
+          <div class="template">日期：
+
+一、今日重点板块
+板块 1：
+今日涨跌：
+成交额排名：
+代表股：
+连续性：第 1 天 / 第 2 天 / 第 3 天
+
+板块 2：
+今日涨跌：
+成交额排名：
+代表股：
+连续性：
+
+二、自选股标签
+强于大盘：
+弱于大盘：
+板块带动：
+独立走强：
+高位分歧：
+低位修复：
+
+三、我的判断
+今天哪些板块值得明天继续观察？
+哪些只是单日异动？
+我有没有把“加入自选”误当成“想买”？</div>
+        </div>
+      </section>
+
+      <section id="day4">
+        <h2>九、第四天：量价趋势与强弱对比</h2>
+        <p>第四天的目标是学会描述一只股票的状态。你不用预测它明天涨跌，只要能说清楚：它在什么趋势里，处于什么位置，量能有没有变化，比大盘和板块强还是弱。</p>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 13 课｜25 分钟</div>
+            <h3>用四句话描述一只股票</h3>
+          </div>
+          <p>看到一只股票时，先不要问“能不能买”。先用四句话描述它。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>描述维度</th>
+                <th>可选答案</th>
+                <th>示例表达</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>趋势</td>
+                <td>上升、下降、横盘</td>
+                <td>最近 20 个交易日处于横盘震荡。</td>
+              </tr>
+              <tr>
+                <td>位置</td>
+                <td>高位、中位、低位</td>
+                <td>股价接近近 20 日高位。</td>
+              </tr>
+              <tr>
+                <td>量能</td>
+                <td>放量、缩量、平量</td>
+                <td>今天上涨但成交量没有明显放大。</td>
+              </tr>
+              <tr>
+                <td>强弱</td>
+                <td>强于大盘、弱于大盘、跟随大盘</td>
+                <td>大盘下跌时它上涨，短线强于市场。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="formula">完整表达模板：
+这只股票最近处于【趋势】，当前位置偏【高/中/低】，今天成交量【放大/缩小/差不多】，表现【强于/弱于/跟随】大盘和所在板块。</div>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 14 课｜30 分钟</div>
+            <h3>认识均线，但不迷信均线</h3>
+          </div>
+          <p>东方财富日K图里常见 5 日、10 日、20 日、60 日均线。均线是过去一段时间的平均价格，用来帮助你观察趋势。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>均线</th>
+                <th>大致含义</th>
+                <th>新手怎么用</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>5 日均线</td>
+                <td>约一周交易日的平均成本。</td>
+                <td>观察短线是否强势。</td>
+              </tr>
+              <tr>
+                <td>10 日均线</td>
+                <td>约两周交易日的平均成本。</td>
+                <td>辅助判断短线趋势是否延续。</td>
+              </tr>
+              <tr>
+                <td>20 日均线</td>
+                <td>约一个月交易日的平均成本。</td>
+                <td>观察中短期趋势。</td>
+              </tr>
+              <tr>
+                <td>60 日均线</td>
+                <td>约一个季度交易日的平均成本。</td>
+                <td>观察更长一点的趋势背景。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout warning">
+            <strong>注意：</strong>均线不是买卖指令。站上均线不等于一定上涨，跌破均线也不等于一定下跌。你只把它当成观察趋势的辅助线。
+          </div>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 15 课｜30 分钟</div>
+            <h3>相对强弱：个股要和三个对象比较</h3>
+          </div>
+          <p>一只股票涨了，不一定强；一只股票跌了，也不一定弱。你要把它和大盘、板块、同类股票比较。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>比较对象</th>
+                <th>你要问的问题</th>
+                <th>判断例子</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>和大盘比</td>
+                <td>它是否跑赢主要指数？</td>
+                <td>上证跌 0.5%，它涨 1%，说明强于大盘。</td>
+              </tr>
+              <tr>
+                <td>和板块比</td>
+                <td>它是否跑赢所在行业或概念？</td>
+                <td>板块涨 3%，它只涨 0.5%，说明弱于板块。</td>
+              </tr>
+              <tr>
+                <td>和同类股比</td>
+                <td>同一板块里它是不是更强？</td>
+                <td>板块多股涨停，它没怎么涨，说明不是核心强势股。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout blue">
+            <strong>训练重点：</strong>不要孤立看涨跌幅。每天至少选一只强势股和一只弱势股，分别和大盘、板块、同类股做比较。
+          </div>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 16 课｜25 分钟</div>
+            <h3>第四天复盘模板</h3>
+          </div>
+          <div class="template">日期：
+
+一、今日观察股票
+名称：
+所属板块：
+
+二、四维描述
+趋势：上升 / 下降 / 横盘
+位置：高位 / 中位 / 低位
+量能：放量 / 缩量 / 平量
+强弱：强于大盘 / 弱于大盘 / 跟随大盘
+
+三、三重比较
+和大盘比：
+和板块比：
+和同类股比：
+
+四、我的判断
+它今天是真强，还是只是跟随板块？
+它的成交量支持今天的走势吗？
+如果明天继续观察，我最想看什么信号？</div>
+          <ul class="task-list">
+            <li>选 1 只强势股，用四句话描述它。</li>
+            <li>选 1 只弱势股，用四句话描述它。</li>
+            <li>各自和大盘、板块、同类股做比较。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="day5">
+        <h2>十、第五天：F10 与基本面入门</h2>
+        <p>第五天的目标是学会用东方财富 F10 快速了解一家公司。你不需要马上读完整年报，而是先回答三个问题：公司做什么、赚不赚钱、贵不贵。</p>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 17 课｜25 分钟</div>
+            <h3>F10 先看四个页面</h3>
+          </div>
+          <p>进入个股页面后，找到 F10。新手先不要把每个栏目都看一遍，只看最能建立公司画像的四个部分。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>F10 栏目</th>
+                <th>你要回答的问题</th>
+                <th>看完后的输出</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>公司概况 / 主营业务</td>
+                <td>它到底靠什么赚钱？</td>
+                <td>用一句话讲清楚公司业务。</td>
+              </tr>
+              <tr>
+                <td>财务摘要</td>
+                <td>营收、利润、现金流大致怎么样？</td>
+                <td>判断公司是增长、稳定，还是下滑。</td>
+              </tr>
+              <tr>
+                <td>行业地位 / 同行业比较</td>
+                <td>它在行业里算强还是弱？</td>
+                <td>找 1-2 个同行做比较。</td>
+              </tr>
+              <tr>
+                <td>股东研究 / 机构持仓</td>
+                <td>有没有长期资金关注？股东结构是否稳定？</td>
+                <td>判断它更像机构重仓股，还是短线题材股。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout">
+            <strong>新手标准：</strong>如果你看完 F10 后，不能用 30 秒向别人说明这家公司做什么，就先不要深入研究它。
+          </div>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 18 课｜35 分钟</div>
+            <h3>四个基础财务指标</h3>
+          </div>
+          <p>基本面入门不需要一开始就学复杂模型。先看四个指标：营收、净利润、现金流、ROE。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>指标</th>
+                <th>通俗含义</th>
+                <th>新手怎么看</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>营业收入</td>
+                <td>公司卖产品或服务赚到的总钱。</td>
+                <td>看过去几年是增长、稳定，还是下滑。</td>
+              </tr>
+              <tr>
+                <td>净利润</td>
+                <td>扣掉成本和费用后真正赚到的钱。</td>
+                <td>营收增长但利润不增长，要多问为什么。</td>
+              </tr>
+              <tr>
+                <td>经营现金流</td>
+                <td>主营业务实际收到的钱。</td>
+                <td>利润好但现金流长期差，要谨慎。</td>
+              </tr>
+              <tr>
+                <td>ROE</td>
+                <td>净资产收益率，粗略衡量公司赚钱效率。</td>
+                <td>长期较高且稳定，通常说明经营质量较好。</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>一个简单判断框架</h3>
+          <div class="formula">好理解的公司：
+主营业务清楚 + 营收利润稳定或增长 + 现金流不差 + 行业地位说得清</div>
+          <p>这个框架不是为了立刻选出好股票，而是帮你排除“完全看不懂”的对象。新手阶段，看得懂比看起来很刺激更重要。</p>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 19 课｜30 分钟</div>
+            <h3>估值只先学 PE、PB 和股息率</h3>
+          </div>
+          <p>估值是“价格和价值的关系”。新手先学三个最常见的指标，不要急着用复杂模型算目标价。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>估值指标</th>
+                <th>含义</th>
+                <th>适合观察什么</th>
+                <th>常见误区</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PE 市盈率</td>
+                <td>市值相对净利润的倍数。</td>
+                <td>盈利稳定的公司。</td>
+                <td>PE 低不一定便宜，可能是利润下滑预期。</td>
+              </tr>
+              <tr>
+                <td>PB 市净率</td>
+                <td>市值相对净资产的倍数。</td>
+                <td>银行、保险、周期、资产较重的公司。</td>
+                <td>PB 低不一定安全，资产质量也重要。</td>
+              </tr>
+              <tr>
+                <td>股息率</td>
+                <td>分红相对股价的比例。</td>
+                <td>红利、银行、公用事业等稳定分红公司。</td>
+                <td>高股息率可能来自股价下跌，也要看分红持续性。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout warning">
+            <strong>估值提醒：</strong>估值指标不能单独使用。一个公司便宜，可能是机会，也可能是市场在提前反映问题。必须结合行业、增长、财务质量和市场环境一起看。
+          </div>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 20 课｜25 分钟</div>
+            <h3>第五天复盘模板</h3>
+          </div>
+          <div class="template">日期：
+
+一、今日研究公司
+名称：
+所属行业：
+主营业务一句话：
+
+二、财务观察
+营收：增长 / 稳定 / 下滑
+净利润：增长 / 稳定 / 下滑
+经营现金流：较好 / 一般 / 较差
+ROE：较高 / 一般 / 较低
+
+三、估值观察
+PE：
+PB：
+股息率：
+和同行相比：偏高 / 偏低 / 差不多
+
+四、我的判断
+这家公司我是否看得懂？
+它上涨或下跌更像基本面原因，还是市场情绪原因？
+我还需要补充了解什么？</div>
+        </div>
+      </section>
+
+      <section id="day6">
+        <h2>十一、第六天：风险管理与模拟组合</h2>
+        <p>第六天的目标是建立“先活下来，再谈收益”的意识。你会学习仓位、止损、分批、ETF 和模拟组合记录。今天仍然以模拟为主，不要求实盘。</p>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 21 课｜25 分钟</div>
+            <h3>仓位管理：不要让一次判断决定命运</h3>
+          </div>
+          <p>仓位就是你投入市场的钱占总资金的比例。新手最重要的不是判断多准，而是避免一次错误造成很大伤害。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>仓位状态</th>
+                <th>含义</th>
+                <th>新手建议</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>空仓</td>
+                <td>没有持有股票或权益资产。</td>
+                <td>学习期可以经常空仓观察。</td>
+              </tr>
+              <tr>
+                <td>轻仓</td>
+                <td>投入较少，比如 10%-30%。</td>
+                <td>适合刚开始模拟或小额练习。</td>
+              </tr>
+              <tr>
+                <td>半仓</td>
+                <td>投入约一半资金。</td>
+                <td>只有在规则比较清楚时再考虑。</td>
+              </tr>
+              <tr>
+                <td>满仓</td>
+                <td>资金几乎全部投入。</td>
+                <td>新手阶段不建议。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="formula">新手风险原则：
+不满仓，不借钱，不用生活费，不因为一天涨跌改变全部计划。</div>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 22 课｜30 分钟</div>
+            <h3>止损、止盈和分批</h3>
+          </div>
+          <p>止损不是承认自己失败，而是承认市场可能和自己判断不同。止盈也不是卖在最高点，而是让收益落袋或降低波动。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>概念</th>
+                <th>通俗含义</th>
+                <th>新手怎么训练</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>止损</td>
+                <td>判断错了或风险扩大时，提前退出。</td>
+                <td>模拟时先写清楚“什么情况说明我错了”。</td>
+              </tr>
+              <tr>
+                <td>止盈</td>
+                <td>上涨后按规则兑现一部分收益。</td>
+                <td>不追求卖最高，训练按计划处理。</td>
+              </tr>
+              <tr>
+                <td>分批买入</td>
+                <td>不一次性买完，分几次建立仓位。</td>
+                <td>降低买在短期高点的压力。</td>
+              </tr>
+              <tr>
+                <td>分批卖出</td>
+                <td>上涨或风险变化时分几次退出。</td>
+                <td>避免全靠一次卖点判断。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout">
+            <strong>训练方式：</strong>每次模拟买入前先写三句话：为什么买，什么情况说明我错了，什么情况我会减仓或退出。
+          </div>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 23 课｜35 分钟</div>
+            <h3>建立一个模拟组合</h3>
+          </div>
+          <p>模拟组合的目标不是立刻赚钱，而是训练“组合思维”。你要学会让不同资产承担不同角色，而不是把所有注意力压在一只股票上。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>组合部分</th>
+                <th>模拟比例</th>
+                <th>作用</th>
+                <th>可观察对象</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>宽基 ETF</td>
+                <td>50%</td>
+                <td>跟踪整体市场，降低个股风险。</td>
+                <td>沪深300ETF、中证500ETF、创业板ETF。</td>
+              </tr>
+              <tr>
+                <td>行业 ETF 或行业代表</td>
+                <td>30%</td>
+                <td>观察板块轮动和行业强弱。</td>
+                <td>半导体、证券、医药、消费、新能源等。</td>
+              </tr>
+              <tr>
+                <td>学习样本个股</td>
+                <td>20%</td>
+                <td>训练个股研究和复盘。</td>
+                <td>你能用 F10 讲清楚业务的公司。</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>你可以用东方财富自选股记录，也可以用表格记录。最重要的是每天更新一次，不要频繁改组合。</p>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 24 课｜25 分钟</div>
+            <h3>第六天复盘模板</h3>
+          </div>
+          <div class="template">日期：
+
+一、模拟组合
+总资金：假设 100000
+宽基 ETF：名称 / 比例 / 今日涨跌
+行业 ETF 或行业代表：名称 / 比例 / 今日涨跌
+学习样本个股：名称 / 比例 / 今日涨跌
+
+二、风险记录
+今天组合最大波动：
+是否有单一标的占比过高：
+是否有冲动加仓或追涨想法：
+
+三、规则检查
+我是否提前写了买入理由？
+我是否写了判断错误的条件？
+我是否知道什么情况下减仓？
+
+四、我的反思
+今天我更关注收益，还是更关注风险？
+这个组合是否太集中？
+明天我只观察，不急着调整的内容是什么？</div>
+        </div>
+      </section>
+
+      <section id="day7">
+        <h2>十二、第七天：综合复盘与学习闭环</h2>
+        <p>第七天的目标是把前六天的内容串起来。你要完成一份完整周复盘，并形成以后每天和每周都能执行的学习流程。</p>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 25 课｜25 分钟</div>
+            <h3>完整看盘闭环</h3>
+          </div>
+          <p>从第七天开始，你不再把每个模块当成孤立知识点，而是用一条链路把它们串起来。</p>
+          <div class="formula">市场环境 → 板块方向 → 个股强弱 → 基本面确认 → 风险规则 → 复盘修正</div>
+          <table>
+            <thead>
+              <tr>
+                <th>环节</th>
+                <th>核心问题</th>
+                <th>输出</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>市场环境</td>
+                <td>今天适合进攻、观察，还是防守？</td>
+                <td>强 / 弱 / 震荡。</td>
+              </tr>
+              <tr>
+                <td>板块方向</td>
+                <td>资金集中在哪些方向？</td>
+                <td>强势板块和弱势板块。</td>
+              </tr>
+              <tr>
+                <td>个股强弱</td>
+                <td>哪些股票强于大盘和板块？</td>
+                <td>强势样本和弱势样本。</td>
+              </tr>
+              <tr>
+                <td>基本面确认</td>
+                <td>这家公司我是否看得懂？</td>
+                <td>业务、财务、估值的一句话判断。</td>
+              </tr>
+              <tr>
+                <td>风险规则</td>
+                <td>如果判断错了怎么办？</td>
+                <td>仓位、止损、分批规则。</td>
+              </tr>
+              <tr>
+                <td>复盘修正</td>
+                <td>我的判断哪里对，哪里错？</td>
+                <td>明日观察重点。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 26 课｜35 分钟</div>
+            <h3>写一份完整周复盘</h3>
+          </div>
+          <p>每日复盘训练观察，周复盘训练理解。周复盘不需要很长，但要能回答“这一周市场的主线是什么”。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>复盘维度</th>
+                <th>要回答的问题</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>指数</td>
+                <td>本周主要指数谁强谁弱？市场整体偏强还是偏弱？</td>
+              </tr>
+              <tr>
+                <td>成交额</td>
+                <td>本周成交额是放大、缩小，还是维持高位？</td>
+              </tr>
+              <tr>
+                <td>板块</td>
+                <td>本周最强主线是什么？有没有连续性？</td>
+              </tr>
+              <tr>
+                <td>个股</td>
+                <td>哪些股票最能代表强势板块？哪些股票出现分化？</td>
+              </tr>
+              <tr>
+                <td>基本面</td>
+                <td>我研究过的公司里，哪些业务和财务最容易理解？</td>
+              </tr>
+              <tr>
+                <td>情绪</td>
+                <td>我有没有追涨、恐慌、过度自信或频繁改变计划？</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 27 课｜30 分钟</div>
+            <h3>建立后续学习节奏</h3>
+          </div>
+          <p>7 天只是入门。后续你需要一个可持续的节奏，而不是一次性学完就停。</p>
+          <table>
+            <thead>
+              <tr>
+                <th>周期</th>
+                <th>任务</th>
+                <th>目标</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>每日</td>
+                <td>看指数、成交额、板块、自选股，写 100-200 字复盘。</td>
+                <td>保持市场触感。</td>
+              </tr>
+              <tr>
+                <td>每周</td>
+                <td>做一次周复盘，更新重点板块和自选股分组。</td>
+                <td>看清主线和变化。</td>
+              </tr>
+              <tr>
+                <td>每月</td>
+                <td>总结模拟组合表现，复查学习样本基本面。</td>
+                <td>训练长期视角。</td>
+              </tr>
+              <tr>
+                <td>每季度</td>
+                <td>选 3-5 家公司读财报摘要或年报核心章节。</td>
+                <td>提升基本面能力。</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="callout">
+            <strong>学习优先级：</strong>先稳定执行每日复盘，再扩展技术指标、财报阅读、宏观和资产配置。不要一次把所有知识点塞满。
+          </div>
+        </div>
+
+        <div class="lesson">
+          <div class="lesson-head">
+            <div class="lesson-no">第 28 课｜30 分钟</div>
+            <h3>第七天周复盘模板</h3>
+          </div>
+          <div class="template">周复盘日期：
+
+一、本周市场环境
+本周最强指数：
+本周最弱指数：
+成交额变化：放大 / 缩小 / 维持高位
+市场整体：偏强 / 偏弱 / 震荡
+
+二、本周板块主线
+最强行业：
+最强概念：
+连续性最好的板块：
+一日游或分化明显的板块：
+
+三、本周个股观察
+最强样本：
+最弱样本：
+最能代表主线的股票：
+最值得警惕的风险信号：
+
+四、本周基本面学习
+研究过的公司：
+最看得懂的业务：
+最不理解的问题：
+
+五、本周情绪复盘
+我有没有追涨？
+我有没有恐慌？
+我有没有频繁改变判断？
+我做得最好的一点：
+下周要改进的一点：
+
+六、下周计划
+重点观察指数：
+重点观察板块：
+重点观察股票：
+重点学习主题：</div>
+        </div>
+      </section>
+
+      <section id="routine">
+        <h2>十三、每日固定流程</h2>
+        <p>每天 30-45 分钟即可。重点是坚持同一套观察顺序，逐步积累盘感。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>时间</th>
+              <th>任务</th>
+              <th>产出</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>5 分钟</td>
+              <td>看指数</td>
+              <td>一句话判断市场强弱</td>
+            </tr>
+            <tr>
+              <td>5 分钟</td>
+              <td>看涨跌家数和成交额</td>
+              <td>判断普涨、普跌或局部行情</td>
+            </tr>
+            <tr>
+              <td>10 分钟</td>
+              <td>看行业 / 概念板块</td>
+              <td>记录强弱方向</td>
+            </tr>
+            <tr>
+              <td>10 分钟</td>
+              <td>看自选股</td>
+              <td>找出强于大盘和弱于大盘的标的</td>
+            </tr>
+            <tr>
+              <td>10 分钟</td>
+              <td>写复盘</td>
+              <td>形成一段自己的判断</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="formula">今天市场强不强？今天资金喜欢什么方向？我的自选股谁强于大盘？强势股是板块带动，还是自己独立走强？我今天有没有情绪化判断？</div>
+      </section>
+
+      <section id="templates">
+        <h2>十四、复盘模板</h2>
+        <p>建议每天直接复制下面模板填写。前两周不要追求写得漂亮，只要求真实、稳定、有依据。</p>
+
+        <h3>第一天：市场全局复盘</h3>
+        <div class="template">日期：
+
+一、指数表现
+上证指数：
+创业板指：
+沪深300：
+中证1000：
+
+二、市场广度
+上涨家数：
+下跌家数：
+两市成交额：
+
+三、板块表现
+最强行业：
+最弱行业：
+最强概念：
+最弱概念：
+
+四、我的判断
+今天市场是强、弱，还是震荡？
+今天是普涨行情，还是局部行情？
+资金偏向大盘股，还是小盘成长股？
+明天我重点观察哪个板块？</div>
+
+        <h3>第二天：个股观察复盘</h3>
+        <div class="template">日期：
+
+一、市场状态
+今天大盘：
+今天强势板块：
+今天弱势板块：
+
+二、观察个股 1
+名称：
+行业：
+今日涨跌：
+是否强于大盘：
+分时表现：
+日K趋势：
+成交量：
+上涨/下跌可能原因：
+
+三、观察个股 2
+名称：
+行业：
+今日涨跌：
+是否强于大盘：
+分时表现：
+日K趋势：
+成交量：
+上涨/下跌可能原因：
+
+四、我的反思
+我今天有没有想追涨？
+我有没有因为下跌而恐慌？
+我的判断来自数据，还是来自情绪？
+明天继续观察什么？</div>
+
+        <h3>第三天：板块与自选股跟踪复盘</h3>
+        <div class="template">日期：
+
+一、今日重点板块
+板块 1：
+今日涨跌：
+成交额排名：
+代表股：
+连续性：第 1 天 / 第 2 天 / 第 3 天
+
+板块 2：
+今日涨跌：
+成交额排名：
+代表股：
+连续性：
+
+二、自选股标签
+强于大盘：
+弱于大盘：
+板块带动：
+独立走强：
+高位分歧：
+低位修复：
+
+三、我的判断
+今天哪些板块值得明天继续观察？
+哪些只是单日异动？
+我有没有把“加入自选”误当成“想买”？</div>
+
+        <h3>第四天：量价强弱复盘</h3>
+        <div class="template">日期：
+
+一、今日观察股票
+名称：
+所属板块：
+
+二、四维描述
+趋势：上升 / 下降 / 横盘
+位置：高位 / 中位 / 低位
+量能：放量 / 缩量 / 平量
+强弱：强于大盘 / 弱于大盘 / 跟随大盘
+
+三、三重比较
+和大盘比：
+和板块比：
+和同类股比：
+
+四、我的判断
+它今天是真强，还是只是跟随板块？
+它的成交量支持今天的走势吗？
+如果明天继续观察，我最想看什么信号？</div>
+
+        <h3>第五天：F10 与基本面复盘</h3>
+        <div class="template">日期：
+
+一、今日研究公司
+名称：
+所属行业：
+主营业务一句话：
+
+二、财务观察
+营收：增长 / 稳定 / 下滑
+净利润：增长 / 稳定 / 下滑
+经营现金流：较好 / 一般 / 较差
+ROE：较高 / 一般 / 较低
+
+三、估值观察
+PE：
+PB：
+股息率：
+和同行相比：偏高 / 偏低 / 差不多
+
+四、我的判断
+这家公司我是否看得懂？
+它上涨或下跌更像基本面原因，还是市场情绪原因？
+我还需要补充了解什么？</div>
+
+        <h3>第六天：风险管理与模拟组合复盘</h3>
+        <div class="template">日期：
+
+一、模拟组合
+总资金：假设 100000
+宽基 ETF：名称 / 比例 / 今日涨跌
+行业 ETF 或行业代表：名称 / 比例 / 今日涨跌
+学习样本个股：名称 / 比例 / 今日涨跌
+
+二、风险记录
+今天组合最大波动：
+是否有单一标的占比过高：
+是否有冲动加仓或追涨想法：
+
+三、规则检查
+我是否提前写了买入理由？
+我是否写了判断错误的条件？
+我是否知道什么情况下减仓？
+
+四、我的反思
+今天我更关注收益，还是更关注风险？
+这个组合是否太集中？
+明天我只观察，不急着调整的内容是什么？</div>
+
+        <h3>第七天：完整周复盘</h3>
+        <div class="template">周复盘日期：
+
+一、本周市场环境
+本周最强指数：
+本周最弱指数：
+成交额变化：放大 / 缩小 / 维持高位
+市场整体：偏强 / 偏弱 / 震荡
+
+二、本周板块主线
+最强行业：
+最强概念：
+连续性最好的板块：
+一日游或分化明显的板块：
+
+三、本周个股观察
+最强样本：
+最弱样本：
+最能代表主线的股票：
+最值得警惕的风险信号：
+
+四、本周基本面学习
+研究过的公司：
+最看得懂的业务：
+最不理解的问题：
+
+五、本周情绪复盘
+我有没有追涨？
+我有没有恐慌？
+我有没有频繁改变判断？
+我做得最好的一点：
+下周要改进的一点：
+
+六、下周计划
+重点观察指数：
+重点观察板块：
+重点观察股票：
+重点学习主题：</div>
+
+        <h3>纸面填写区</h3>
+        <div class="note-lines">
+          <div>今日一句话市场判断：</div>
+          <div>今日最强板块：</div>
+          <div>今日最弱板块：</div>
+          <div>今日最值得观察的股票：</div>
+          <div>今日最需要克制的情绪：</div>
+          <div>明日观察重点：</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>十五、暂时不学清单</h2>
+        <p>这些内容以后都可以学，但现在容易让你跳过基本功。先不深挖：</p>
+        <div class="pill-row">
+          <span class="pill">龙虎榜</span>
+          <span class="pill">主力净流入</span>
+          <span class="pill">融资融券</span>
+          <span class="pill">集合竞价战法</span>
+          <span class="pill">打板</span>
+          <span class="pill">短线盘口技巧</span>
+          <span class="pill">MACD 复杂用法</span>
+          <span class="pill">KDJ 复杂用法</span>
+          <span class="pill">荐股直播</span>
+        </div>
+        <div class="callout">
+          <strong>阶段性目标：</strong>先稳定地看懂“市场整体、板块方向、个股强弱、成交量变化”。等你能连续复盘两周，再把资金流、技术指标和交易策略逐步加进来。
+        </div>
+      </section>
+
+      <section>
+        <h2>十六、达标检查</h2>
+        <p>七天学完后，如果你能独立说出下面这段话，就算第一阶段达标。</p>
+        <div class="formula">今天市场整体偏强/偏弱，因为主要指数表现如何、成交额如何、上涨家数如何。
+今天资金主要流向某些板块，其中某某板块最强。
+我观察的某只股票强于/弱于大盘，它的分时表现、日K位置和成交量说明它当前处于某种状态。
+我能用 F10 说清它的主营业务和基础财务情况。
+我知道如果判断错了，应该用仓位和规则控制风险。
+我现在只是观察和复盘，不因为一天涨跌做冲动决策。</div>
+      </section>
+
+      <section id="sources">
+        <h2>十七、参考资料</h2>
+        <ul>
+          <li><a href="https://quote.eastmoney.com/center/">东方财富行情中心</a></li>
+          <li><a href="https://quote.eastmoney.com/zixuan/?from=favor">东方财富自选股页面</a></li>
+          <li><a href="https://quote.eastmoney.com/help/newfavor.html">东方财富自选股帮助中心</a></li>
+          <li><a href="https://choice.eastmoney.com/school">Choice 数据学院</a></li>
+          <li><a href="https://caifuhao.eastmoney.com/news/20251021142556351539320">东方财富功能驿站：个股单页盯盘功能介绍</a></li>
+        </ul>
+      </section>
+
+      <div class="footer">
+        <p>生成日期：2026-05-18。更新日期：2026-05-19。本文档为学习讲义，不构成任何投资建议。练习阶段以模拟观察和复盘为主，避免因短期涨跌做冲动决策。</p>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
