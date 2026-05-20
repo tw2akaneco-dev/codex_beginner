@@ -6,11 +6,14 @@
 请在每个交易日 21:00 生成一份“今日亚洲收盘 + 欧洲交易中 + 美股盘前”晚报。目标是让我复盘今天 A股、港股、亚洲市场的表现，并提前理解今晚美股和海外市场可能关注什么。
 
 请参考：
+- /Users/px/Desktop/codex_beginner/日报/data_source_policy.md
 - /Users/px/Desktop/cursor_beginner/context/daily/research/
 - /Users/px/Desktop/cursor_beginner/context/daily/reviews/
 - /Users/px/Desktop/cursor_beginner/context/knowledge/macro.md
 - /Users/px/Desktop/cursor_beginner/context/knowledge/asset_research.md
 - /Users/px/Desktop/cursor_beginner/dashboard/market_data_cache.json
+
+必须先读取并遵守 `/Users/px/Desktop/codex_beginner/日报/data_source_policy.md`。抓取市场数据、宏观数据、政策新闻和事件日历时，按该文件规定的主源、备用源、兜底源顺序降级；实际报告中必须写明最终使用的数据源与时间。若主源不可得，不能直接跳到随机网络结果，必须按规范说明降级或标注“未获取 / 数据缺失 / 待确认”。
 
 输出 Markdown，保存到：
 /Users/px/Desktop/cursor_beginner/context/daily/research/YYYY-MM-DD_晚间大类资产日报.md

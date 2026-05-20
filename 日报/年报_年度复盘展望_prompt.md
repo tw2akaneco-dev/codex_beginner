@@ -6,11 +6,14 @@
 请在每年最后一周生成年度复盘和下一年宏观情景展望。目标是帮我总结全年全球股、债、汇、商品、宏观政策和政经新闻的主线，并形成下一年的市场观察框架。
 
 参考：
+- /Users/px/Desktop/codex_beginner/日报/data_source_policy.md
 - /Users/px/Desktop/cursor_beginner/context/daily/research/
 - /Users/px/Desktop/cursor_beginner/context/daily/reviews/
 - /Users/px/Desktop/cursor_beginner/context/knowledge/macro.md
 - /Users/px/Desktop/cursor_beginner/context/knowledge/asset_research.md
 - /Users/px/Desktop/cursor_beginner/dashboard/market_data_cache.json
+
+必须先读取并遵守 `/Users/px/Desktop/codex_beginner/日报/data_source_policy.md`。抓取市场数据、宏观数据、政策新闻和事件日历时，按该文件规定的主源、备用源、兜底源顺序降级；实际报告中必须写明最终使用的数据源与时间。若主源不可得，不能直接跳到随机网络结果，必须按规范说明降级或标注“未获取 / 数据缺失 / 待确认”。
 
 保存到：
 /Users/px/Desktop/cursor_beginner/context/daily/reviews/YYYY_全球大类资产年度复盘与展望.md
