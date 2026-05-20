@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>早间大类资产与政经日报｜2026-05-20</title>
+  <style>
+    :root {
+      --sidebar: #0f302d;
+      --sidebar-soft: rgba(255, 255, 255, 0.72);
+      --paper: #ffffff;
+      --bg: #f4f7f8;
+      --text: #1d2939;
+      --muted: #667085;
+      --line: #d9e2ec;
+      --accent: #167f78;
+      --accent-2: #2f6de0;
+      --note: #edf6ff;
+      --warn: #fff7e6;
+      --missing: #f3f4f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.75;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 28px 24px;
+      background: var(--sidebar);
+      color: #eef8f6;
+    }
+    .sidebar h1 {
+      margin: 0 0 18px;
+      font-size: 30px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+    .sidebar .summary {
+      margin: 0 0 24px;
+      color: var(--sidebar-soft);
+      font-size: 15px;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 34px;
+    }
+    .chip {
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      padding: 6px 12px;
+      color: #e4f2ef;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .toc-title {
+      margin: 0 0 12px;
+      color: #aacbc6;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .toc {
+      display: grid;
+      gap: 4px;
+    }
+    .toc a {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 6px;
+      align-items: start;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: rgba(255, 255, 255, 0.86);
+      text-decoration: none;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+    .toc a:hover {
+      background: rgba(255, 255, 255, 0.10);
+      color: #fff;
+    }
+    .toc span {
+      color: #9cc8c2;
+      font-variant-numeric: tabular-nums;
+    }
+    main {
+      min-width: 0;
+      padding: 40px 48px 56px;
+    }
+    .content {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+    .hero {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+    .section {
+      scroll-margin-top: 24px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin: 22px 0;
+    }
+    h2 {
+      margin: 0 0 20px;
+      padding-bottom: 14px;
+      border-bottom: 4px solid var(--accent);
+      font-size: 26px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+    h2 span {
+      margin-right: 12px;
+      color: var(--accent);
+      font-size: 16px;
+      vertical-align: 3px;
+    }
+    h3 {
+      margin: 24px 0 10px;
+      font-size: 21px;
+      line-height: 1.45;
+      letter-spacing: 0;
+    }
+    p { margin: 12px 0; }
+    ul, ol { padding-left: 22px; margin: 12px 0; }
+    li { margin: 7px 0; }
+    blockquote {
+      margin: 18px 0;
+      padding: 16px 20px;
+      border-left: 5px solid var(--accent-2);
+      background: var(--note);
+      color: #213047;
+      font-weight: 650;
+    }
+    .beginner-note {
+      margin: 18px 0 4px;
+      padding: 16px 18px;
+      border-left: 5px solid var(--accent-2);
+      background: var(--note);
+      color: #24324a;
+      font-weight: 600;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      font-size: 14px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 12px 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th:last-child, td:last-child { border-right: 0; }
+    tr:last-child td { border-bottom: 0; }
+    th {
+      background: #eef3f5;
+      color: #243042;
+      font-weight: 750;
+    }
+    code {
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #edf2f7;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .tag {
+      display: inline-block;
+      margin: 0 2px;
+      padding: 1px 7px;
+      border-radius: 999px;
+      font-size: 0.86em;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+    .tag-warn { background: var(--warn); color: #9a5b00; border-color: #f4d69c; }
+    .tag-missing { background: var(--missing); color: #475467; border-color: #d0d5dd; }
+    a {
+      color: #155eef;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+    .footer {
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+      padding: 26px 0 4px;
+    }
+    @media (max-width: 900px) {
+      .layout { display: block; }
+      .sidebar {
+        position: relative;
+        height: auto;
+        padding: 24px 20px;
+      }
+      .sidebar h1 { font-size: 26px; }
+      main { padding: 22px 16px 36px; }
+      .hero, .section { padding: 22px 18px; }
+      .hero h1 { font-size: 26px; }
+      h2 { font-size: 22px; }
+      .toc a { grid-template-columns: 24px 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h1>早间大类资产与政经日报</h1>
+      <p class="summary">隔夜主线是 <strong>risk-off（避险/降风险）偏强</strong>：美股三大指数连续回落，核心压力来自美债收益率继续上行和科技股估值降温。</p>
+      <div class="chips">
+        <span class="chip">2026-05-20</span>
+        <span class="chip">HTML 看盘版</span>
+        <span class="chip">学习用途</span>
+      </div>
+      <div class="toc-title">目录</div>
+      <nav class="toc"><a href="#给我看的超短版"><span>1.</span>给我看的超短版</a><a href="#一隔夜一句话结论"><span>2.</span>一、隔夜一句话结论</a><a href="#二隔夜核心市场数据"><span>3.</span>二、隔夜核心市场数据</a><a href="#三隔夜政经新闻精读"><span>4.</span>三、隔夜政经新闻精读</a><a href="#四隔夜跨资产联动链条"><span>5.</span>四、隔夜跨资产联动链条</a><a href="#五今日亚洲开盘前观察清单"><span>6.</span>五、今日亚洲开盘前观察清单</a><a href="#六人民币与中国资产提示"><span>7.</span>六、人民币与中国资产提示</a><a href="#七今天事件日历"><span>8.</span>七、今天事件日历</a><a href="#八知识沉淀"><span>9.</span>八、知识沉淀</a><a href="#九数据源与可信度说明"><span>10.</span>九、数据源与可信度说明</a></nav>
+    </aside>
+    <main>
+      <div class="content">
+        <header class="hero">
+          <h1>早间大类资产与政经日报｜2026-05-20</h1>
+          <p>隔夜主线是 <strong>risk-off（避险/降风险）偏强</strong>：美股三大指数连续回落，核心压力来自美债收益率继续上行和科技股估值降温。</p>
+        </header>
+        <blockquote>注：本报告为 2026-05-20 下午补生成，保持“早报”口径，主要复盘 2026-05-19 美股和欧洲收盘、2026-05-20 亚洲开盘前后可验证信息。已发生的中国 LPR 事件纳入今日事件与中国资产提示。</blockquote><section class="section" id="给我看的超短版"><h2><span>1</span>给我看的超短版</h2><ul><li>隔夜主线是 <strong>risk-off（避险/降风险）偏强</strong>：美股三大指数连续回落，核心压力来自美债收益率继续上行和科技股估值降温。</li><li>美股：S&amp;P 500 跌0.7%，Dow 跌0.6%，Nasdaq 跌0.8%；不是崩盘，但属于高位回撤，尤其对AI和半导体情绪不友好。</li><li>美债：美国10年期国债收益率升至4.67%，30年期升至5.18%；这会压股票估值，也会推高房贷、企业融资和AI数据中心资本开支压力。</li><li>美元：DXY约99.2，日内小跌但5月仍偏强；USD/JPY在159附近，日元仍接近日本当局干预敏感区。</li><li>商品：Brent结算价111.28美元/桶，较前一日回落0.7%，但仍远高于伊朗战争前约70美元；油价没有继续冲高，是好事，但高油价通胀压力还在。</li><li>中国：5月LPR继续不变，1年期3.00%、5年期以上3.50%；这说明政策仍偏稳，不是马上大幅降息刺激。</li><li>今天亚洲市场最该盯：人民币中间价和USD/CNH、恒生科技、日经和KOSPI、美国10Y是否守在4.6%以上、今晚Nvidia财报。</li><li>结论：今天不是“坏消息爆炸”，而是“债券市场在提醒股票别太贵”。如果Nvidia财报不能稳住AI信仰，亚洲科技股会继续受压。</li></ul><div class="beginner-note">小白理解：股票怕高利率，因为利率越高，未来利润折到今天就越不值钱。现在市场不是不相信AI，而是在问：AI再好，价格是不是已经太贵了？</div></section><section class="section" id="一隔夜一句话结论"><h2><span>2</span>一、隔夜一句话结论</h2><p>隔夜海外市场偏 risk-off，risk-off 就是投资者降低风险资产仓位、转向更谨慎的状态。主导变量不是单一公司新闻，而是“高美债收益率 + 高油价通胀担忧 + 科技股涨多了”的组合。美股连续第三天下跌，说明前期 record rally（创纪录上涨）开始遇到债券市场压力。对亚洲开盘的提示是：港股科技、日韩半导体和高估值成长股更敏感，A股则要看内资能否继续托住科技和政策预期。</p><div class="beginner-note">小白理解：昨晚市场像是被债券市场敲了一下桌子：股票可以涨，但如果借钱成本越来越高，估值就不能无限拔高。今天亚洲市场先看科技股会不会继续被压。</div></section><section class="section" id="二隔夜核心市场数据"><h2><span>3</span>二、隔夜核心市场数据</h2><div class="table-wrap"><table><thead><tr><th>资产/指标</th><th>最新值</th><th>日变动</th><th>周变动</th><th>月初以来</th><th>年初以来</th><th>状态</th><th>数据源与时间</th></tr></thead><tbody><tr><td>S&amp;P 500</td><td>7,353.61</td><td>-0.7%</td><td>-0.7%</td><td><span class="tag tag-missing">未获取</span></td><td>+7.4%</td><td>高位第三日回落</td><td><a href="https://apnews.com/article/wall-street-stocks-dow-nasdaq-e47b04bcb52eda2411691e062ce60a72" target="_blank" rel="noopener noreferrer">AP</a>，2026-05-19 美股收盘</td></tr><tr><td>Nasdaq</td><td>25,870.71</td><td>-0.8%</td><td>-1.4%</td><td><span class="tag tag-missing">未获取</span></td><td>+11.3%</td><td>科技股承压</td><td><a href="https://apnews.com/article/wall-street-stocks-dow-nasdaq-e47b04bcb52eda2411691e062ce60a72" target="_blank" rel="noopener noreferrer">AP</a>，2026-05-19 美股收盘</td></tr><tr><td>Dow Jones</td><td>49,363.88</td><td>-0.6%</td><td>-0.3%</td><td><span class="tag tag-missing">未获取</span></td><td>+2.7%</td><td>跌幅小于成长股</td><td><a href="https://apnews.com/article/wall-street-stocks-dow-nasdaq-e47b04bcb52eda2411691e062ce60a72" target="_blank" rel="noopener noreferrer">AP</a>，2026-05-19 美股收盘</td></tr><tr><td>Stoxx 600</td><td><span class="tag tag-missing">数据缺失</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>欧洲总指数收盘<span class="tag tag-missing">未获取</span></td><td>主源/备用源未取得可靠收盘点位</td></tr><tr><td>DAX</td><td>点位<span class="tag tag-missing">未获取</span></td><td>+0.4%</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>德股相对抗跌</td><td><a href="https://apnews.com/article/stocks-markets-iran-bonds-yields-fde4dcd17a3c02d884a947342e8e8f5e" target="_blank" rel="noopener noreferrer">AP</a>，2026-05-19</td></tr><tr><td>FTSE 100</td><td>点位<span class="tag tag-missing">未获取</span></td><td>+0.1%</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>小涨</td><td><a href="https://apnews.com/article/stocks-markets-iran-bonds-yields-fde4dcd17a3c02d884a947342e8e8f5e" target="_blank" rel="noopener noreferrer">AP</a>，2026-05-19</td></tr><tr><td>CAC 40</td><td><span class="tag tag-missing">数据缺失</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>法股收盘<span class="tag tag-missing">未获取</span></td><td>主源/备用源未取得可靠收盘点位</td></tr><tr><td>美国2Y</td><td>4.13%</td><td>+6bp</td><td>+13bp</td><td>+18bp</td><td><span class="tag tag-missing">未获取</span></td><td>短端利率上行</td><td><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value=2026&amp;type=daily_treasury_yield_curve" target="_blank" rel="noopener noreferrer">美国财政部</a>，2026-05-19</td></tr><tr><td>美国10Y</td><td>4.67%</td><td>+6bp</td><td>+21bp</td><td>+31bp</td><td><span class="tag tag-missing">未获取</span></td><td>估值压力核心变量</td><td><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value=2026&amp;type=daily_treasury_yield_curve" target="_blank" rel="noopener noreferrer">美国财政部</a>，2026-05-19</td></tr><tr><td>美国30Y</td><td>5.18%</td><td>+4bp</td><td>+15bp</td><td>+20bp</td><td><span class="tag tag-missing">未获取</span></td><td>长端压力很高</td><td><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value=2026&amp;type=daily_treasury_yield_curve" target="_blank" rel="noopener noreferrer">美国财政部</a>，2026-05-19</td></tr><tr><td>美国10Y-2Y利差</td><td>+54bp</td><td>基本持平</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>曲线偏陡</td><td>由美国财政部2Y与10Y计算</td></tr><tr><td>DXY</td><td>约99.192</td><td>-0.09%，<span class="tag tag-warn">待确认</span></td><td><span class="tag tag-missing">未获取</span></td><td>5月仍偏强，<span class="tag tag-warn">待确认</span></td><td><span class="tag tag-missing">未获取</span></td><td>日内小跌但美元仍有支撑</td><td><a href="https://www.kucoin.com/news/flash/dxy-drops-to-99-192-as-major-currencies-fluctuate-on-may-19" target="_blank" rel="noopener noreferrer">KuCoin快讯转述</a>，2026-05-19，低于Yahoo/ICE优先级</td></tr><tr><td>USD/CNH</td><td><span class="tag tag-missing">数据缺失</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>离岸人民币实时点位<span class="tag tag-missing">未获取</span></td><td>主源不可得，本地缓存过期</td></tr><tr><td>USD/CNY中间价</td><td>6.8375</td><td>人民币中间价上调60bp</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>稳汇率信号</td><td><a href="https://www.chinanews.com.cn/cj/2026/05-19/10623924.shtml" target="_blank" rel="noopener noreferrer">中国新闻网</a>，2026-05-19</td></tr><tr><td>USD/JPY</td><td>约159.05</td><td>小幅回落，<span class="tag tag-warn">待确认</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>日元仍弱</td><td><a href="https://apnews.com/article/351c7434b9875516e61e8917f960fc13" target="_blank" rel="noopener noreferrer">AP</a>，2026-05-20 亚洲早盘</td></tr><tr><td>EUR/USD</td><td>约1.1591</td><td>小幅回落，<span class="tag tag-warn">待确认</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>欧元偏弱</td><td><a href="https://apnews.com/article/351c7434b9875516e61e8917f960fc13" target="_blank" rel="noopener noreferrer">AP</a>，2026-05-20 亚洲早盘</td></tr><tr><td>GBP/USD</td><td>1.3411</td><td>上涨，<span class="tag tag-warn">待确认</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>点位需复核</td><td><a href="https://www.kucoin.com/news/flash/dxy-drops-to-99-192-as-major-currencies-fluctuate-on-may-19" target="_blank" rel="noopener noreferrer">KuCoin快讯转述</a>，2026-05-19</td></tr><tr><td>Brent</td><td>111.28美元/桶</td><td>-0.7%</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>高位回落但仍有通胀压力</td><td><a href="https://apnews.com/article/stocks-markets-iran-bonds-yields-fde4dcd17a3c02d884a947342e8e8f5e" target="_blank" rel="noopener noreferrer">AP</a>，2026-05-19</td></tr><tr><td>WTI</td><td>约103美元/桶</td><td>回落，<span class="tag tag-warn">待确认</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>仍处高位</td><td><a href="https://sg.finance.yahoo.com/news/stock-market-today-dow-sp-500-nasdaq-slide-as-rising-bond-yields-maintain-pressure-tech-stocks-retreat-222343224.html" target="_blank" rel="noopener noreferrer">Yahoo Finance转述页</a>，2026-05-19</td></tr><tr><td>黄金</td><td>约4,497-4,585美元/盎司</td><td>口径分歧</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>数据口径分歧，<span class="tag tag-warn">待确认</span></td><td><a href="https://invezz.com/news/2026/05/19/commodity-wrap-oil-falls-as-trump-pauses-iran-attacks-gold-copper-slip/" target="_blank" rel="noopener noreferrer">Invezz</a>、<a href="https://www.businessupturn.com/sectors/commodities/gold-rises-to-4585-silver-climbs-to-78-68-and-crude-eases-below-110-as-trump-calls-off-iran-strike-on-gulf-allies-appeal/" target="_blank" rel="noopener noreferrer">BusinessUpturn</a>，2026-05-19</td></tr><tr><td>白银</td><td>约74.36-78.68美元/盎司</td><td>口径分歧</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>数据口径分歧，<span class="tag tag-warn">待确认</span></td><td><a href="https://invezz.com/news/2026/05/19/commodity-wrap-oil-falls-as-trump-pauses-iran-attacks-gold-copper-slip/" target="_blank" rel="noopener noreferrer">Invezz</a>、<a href="https://www.businessupturn.com/sectors/commodities/gold-rises-to-4585-silver-climbs-to-78-68-and-crude-eases-below-110-as-trump-calls-off-iran-strike-on-gulf-allies-appeal/" target="_blank" rel="noopener noreferrer">BusinessUpturn</a></td></tr><tr><td>铜</td><td><span class="tag tag-missing">数据缺失</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>最新可靠点位<span class="tag tag-missing">未获取</span></td><td>商品主源未取得</td></tr><tr><td>天然气</td><td><span class="tag tag-missing">数据缺失</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>最新可靠点位<span class="tag tag-missing">未获取</span></td><td>商品主源未取得</td></tr><tr><td>VIX</td><td>约17.5-19.0</td><td><span class="tag tag-warn">待确认</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>低于25，无股市恐慌</td><td><a href="https://www.optionistics.com/quotes/stock-quotes/VIX" target="_blank" rel="noopener noreferrer">Optionistics</a>、<a href="https://www.investing.com/indices/us-spx-vix-futures?cid=8884" target="_blank" rel="noopener noreferrer">Investing VIX futures</a>，低置信度</td></tr><tr><td>MOVE</td><td><span class="tag tag-missing">数据缺失</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>债券波动需复核</td><td>主源未取得</td></tr><tr><td>高收益债利差</td><td>2.76%（5月14日）</td><td>数据滞后</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">未获取</span></td><td>信用压力暂未扩散</td><td><a href="https://ycharts.com/indicators/us_high_yield_master_ii_optionadjusted_spread/chart/?source=content_type%3Areact%7Cfirst_level_url%3Aarticle%7Csection%3Amain_content%7Cbutton%3Abody_link" target="_blank" rel="noopener noreferrer">YCharts</a>，2026-05-14</td></tr></tbody></table></div><div class="beginner-note">小白理解：表里最重要的是美国10年期4.67%、30年期5.18%、Brent 111美元。VIX不高说明股票没恐慌，但债券和油价正在给股票估值施压。</div></section><section class="section" id="三隔夜政经新闻精读"><h2><span>4</span>三、隔夜政经新闻精读</h2><h3>美股连续第三天下跌，高美债压制科技股</h3><ul><li>发生了什么：AP报道，S&amp;P 500下跌0.7%，Dow下跌0.6%，Nasdaq下跌0.8%，美股从纪录高位继续回落。</li><li>为什么重要：Nasdaq和AI链条涨幅大、估值高，对利率更敏感。美债收益率越高，市场越不愿意为未来很多年的利润付太高价格。</li><li>影响哪些资产：Nasdaq、S&amp;P 500、半导体、港股科技、日经成长股、KOSPI。</li><li>是短期扰动还是可能改变主线：短期是估值降温；如果10Y持续高于4.7%并叠加Nvidia财报不及预期，可能改变AI交易节奏。</li><li>置信度：高。</li><li>数据/新闻来源：<a href="https://apnews.com/article/wall-street-stocks-dow-nasdaq-e47b04bcb52eda2411691e062ce60a72" target="_blank" rel="noopener noreferrer">AP美股收盘</a>、<a href="https://apnews.com/article/stocks-markets-iran-bonds-yields-fde4dcd17a3c02d884a947342e8e8f5e" target="_blank" rel="noopener noreferrer">AP市场综述</a>。</li></ul><h3>美国长端收益率继续上行，债券市场成为核心压力源</h3><ul><li>发生了什么：美国财政部数据显示，5月19日2Y为4.13%，10Y为4.67%，30Y为5.18%。AP也提到10Y从前一日4.61%升至4.66%附近。</li><li>为什么重要：10Y影响股票估值和企业融资，30Y影响房贷和长期项目融资。AI数据中心需要大量资本开支，高长端利率会提高资金成本。</li><li>影响哪些资产：美债、美元、黄金、美股科技、港股科技、房地产链。</li><li>是短期扰动还是可能改变主线：如果只是油价和地缘带来的短期通胀风险，是短期扰动；如果市场开始长期要求更高期限溢价，股票估值上限会下移。</li><li>置信度：高。</li><li>数据/新闻来源：<a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?field_tdr_date_value=2026&amp;type=daily_treasury_yield_curve" target="_blank" rel="noopener noreferrer">美国财政部收益率曲线</a>、<a href="https://apnews.com/article/stocks-markets-iran-bonds-yields-fde4dcd17a3c02d884a947342e8e8f5e" target="_blank" rel="noopener noreferrer">AP</a>。</li></ul><h3>油价回落但仍高，伊朗战争继续影响通胀预期</h3><ul><li>发生了什么：Brent结算价下跌0.7%至111.28美元/桶。AP称油价从高位回落，但仍远高于伊朗战争前约70美元水平。</li><li>为什么重要：油价是通胀的重要输入项。油价高会推升汽油、运输和企业成本，让美联储更难降息，甚至让市场讨论加息风险。</li><li>影响哪些资产：Brent、WTI、能源股、航空股、美国通胀预期、美债收益率、美元、黄金。</li><li>是短期扰动还是可能改变主线：谈判或停火消息会造成短期波动；如果供应受阻持续，油价会变成中期通胀主线。</li><li>置信度：高。</li><li>数据/新闻来源：<a href="https://apnews.com/article/stocks-markets-iran-bonds-yields-fde4dcd17a3c02d884a947342e8e8f5e" target="_blank" rel="noopener noreferrer">AP市场综述</a>、<a href="https://invezz.com/news/2026/05/19/commodity-wrap-oil-falls-as-trump-pauses-iran-attacks-gold-copper-slip/" target="_blank" rel="noopener noreferrer">Invezz商品综述</a>。</li></ul><h3>Nvidia财报成为今晚AI交易的关键考试</h3><ul><li>发生了什么：Nvidia计划在5月20日美股收盘后发布截至2026年4月26日的FY2027 Q1业绩。</li><li>为什么重要：Nvidia是AI硬件链核心锚。它的收入、毛利率、订单和指引，会影响市场是否继续相信AI资本开支能覆盖高估值。</li><li>影响哪些资产：Nvidia、Nasdaq、半导体、AI服务器、电力设备、港股科技、日韩芯片股。</li><li>是短期扰动还是可能改变主线：如果业绩强且指引强，可能缓解科技股回调；如果指引弱，高美债会放大估值压力。</li><li>置信度：高。</li><li>数据/新闻来源：<a href="https://www.fool.com/investing/2026/05/19/nvda-stock-earnings-beat-date-may-20/" target="_blank" rel="noopener noreferrer">Motley Fool</a>、<a href="https://www.kiplinger.com/investing/live/nvidia-earnings-live-updates-and-commentary-may-2026" target="_blank" rel="noopener noreferrer">Kiplinger Nvidia预告</a>。</li></ul><h3>中国5月LPR继续不变，政策仍偏“稳”</h3><ul><li>发生了什么：5月20日，中国1年期LPR为3.00%，5年期以上LPR为3.50%，均与上月持平，Reuters称这是连续第12个月不变。</li><li>为什么重要：LPR是贷款定价的重要参考，5年期以上LPR尤其影响房贷。维持不变说明政策没有选择马上用降息强刺激，而是继续观察资金面、地产和汇率约束。</li><li>影响哪些资产：A股地产链、银行、人民币、中债、港股地产和内需股。</li><li>是短期扰动还是可能改变主线：短期中性；如果后续财政、地产去库存或结构性政策加码，才会改变中国资产主线。</li><li>置信度：高。</li><li>数据/新闻来源：<a href="https://www.chinanews.com.cn/cj/2026/05-20/10624697.shtml" target="_blank" rel="noopener noreferrer">中国新闻网</a>、<a href="https://m.investing.com/news/economy-news/china-leaves-lending-benchmarks-unchanged-for-12th-month-in-may-4700098?ampMode=1" target="_blank" rel="noopener noreferrer">Reuters via Investing</a>。</li></ul><div class="beginner-note">小白理解：新闻可以压成一句话：美国高利率压科技，油价高让通胀担心不消，Nvidia今晚决定AI能不能稳住，中国LPR不变说明国内政策还在稳着走。</div></section><section class="section" id="四隔夜跨资产联动链条"><h2><span>5</span>四、隔夜跨资产联动链条</h2><h3>链条1：伊朗战争与油价高位 → 通胀担忧 → 美债收益率上行 → 科技股承压</h3><ul><li>触发事件：Brent仍在111美元附近，市场担心能源价格维持高位。</li><li>传导逻辑：油价高会推通胀，通胀高会让美联储更难降息，债券收益率上行又会压股票估值。</li><li>受影响资产：Brent、美国10Y/30Y、Nasdaq、港股科技、日经、KOSPI。</li><li>置信度：高。</li><li>今天亚洲市场要验证什么：日经和KOSPI是否继续弱于其他亚洲股市，港股科技是否被Nasdaq带着走。</li></ul><h3>链条2：美国长端收益率上行 → 美元维持支撑 → 亚洲货币承压</h3><ul><li>触发事件：美国10Y升至4.67%，30Y升至5.18%。</li><li>传导逻辑：美债收益率高会提高美元资产吸引力，日元、韩元、人民币等亚洲货币更容易承压；港股因为资金更国际化，对这个链条更敏感。</li><li>受影响资产：DXY、USD/JPY、USD/CNH、恒生科技、黄金。</li><li>置信度：中高。</li><li>今天亚洲市场要验证什么：人民币中间价是否偏强，USD/JPY是否逼近160，日本是否释放干预信号。</li></ul><h3>链条3：Nvidia财报前观望 → 半导体获利回吐 → 亚洲AI链分化</h3><ul><li>触发事件：Nvidia将于5月20日美股收盘后发布业绩，市场提前降低部分科技仓位。</li><li>传导逻辑：AI链条涨幅大，业绩前资金会锁定利润；如果财报强，可能重新拉动AI交易；如果不够强，获利回吐会扩散。</li><li>受影响资产：Nvidia、Nasdaq、SOX、KOSPI、日经科技、恒生科技、A股半导体。</li><li>置信度：中高。</li><li>今天亚洲市场要验证什么：A股半导体是否能独立走强，还是跟随海外科技降温。</li></ul><div class="beginner-note">小白理解：最重要的链条不是“美股跌所以A股跌”这么简单，而是油价、债券、美元、科技估值一起传导。今天的验证点在亚洲科技股和人民币。</div></section><section class="section" id="五今日亚洲开盘前观察清单"><h2><span>6</span>五、今日亚洲开盘前观察清单</h2><ul><li>人民币中间价和USD/CNH：看央行是否继续给偏强中间价，也看离岸人民币是否靠近6.85这类心理位置。人民币稳，港股和A股外资情绪会少一个压力。</li><li>恒生科技、港股开盘：港股科技对美债和Nasdaq最敏感。如果恒生科技明显弱于恒指，说明海外利率仍在压估值。</li><li>A股主要指数和成交额：北向资金口径不一定稳定，因此重点看沪深300、创业板、科创50和成交额。若科创继续抗跌，说明本土AI/半导体主线还在。</li><li>日经和KOSPI：日股看日元和日本长债，韩股看半导体获利回吐。若日韩继续弱，说明科技链压力还没散。</li><li>原油、黄金、铜：原油看通胀，黄金看避险与实际利率，铜看中国和全球制造需求。油高、铜弱是“通胀高但增长不强”的不舒服组合。</li><li>美国10Y：只要10Y还在4.6%以上，高估值资产都会比较难受。若重新下破4.5%，成长股压力会减轻。</li><li>今晚Nvidia财报：这是AI交易的核心锚。不是只看盈利是否超预期，更要看下一季度收入指引和数据中心需求。</li></ul><div class="beginner-note">小白理解：今天别只看A股红绿。先看人民币稳不稳，再看港股科技和日韩芯片，最后看美债和Nvidia能不能救回科技情绪。</div></section><section class="section" id="六人民币与中国资产提示"><h2><span>7</span>六、人民币与中国资产提示</h2><p>隔夜DXY约99.2，日内不算强，但美国10年期和30年期收益率继续上行，人民币仍有外部压力。USD/CNH实时可靠点位本次<span class="tag tag-missing">未获取</span>，所以不能判断是否已经逼近关键关口；但5月19日中间价6.8375偏稳，说明政策仍在引导人民币稳定。港股更容易受Nasdaq、美债、美元影响，A股则更看国内政策预期、成交额和科技主线能否延续。对出口、进口和跨境支付来说，当前最实用的启发是：不要只看人民币单日涨跌，要同时看DXY、美债10Y和油价，因为这些会共同影响客户结汇、购汇和锁汇需求。</p><div class="beginner-note">小白理解：人民币像中国资产的温度计。它稳住，A股和港股少一层压力；它突然贬值，说明外部高利率和美元压力传进来了。</div></section><section class="section" id="七今天事件日历"><h2><span>8</span>七、今天事件日历</h2><div class="table-wrap"><table><thead><tr><th>时间</th><th>事件</th><th>重要性</th><th>影响资产</th><th>我需要关注什么</th></tr></thead><tbody><tr><td>09:15</td><td>中国人民币中间价</td><td>高</td><td>USD/CNH、港股、A股</td><td>是否继续释放稳汇率信号</td></tr><tr><td>09:20</td><td>中国5月LPR公布：1年期3.00%、5年期以上3.50%</td><td>高</td><td>A股地产、银行、中债、人民币</td><td>LPR不变后，市场是否转向期待财政/地产政策</td></tr><tr><td>09:30</td><td>A股、港股交易</td><td>高</td><td>上证、沪深300、创业板、恒生科技</td><td>港股科技是否跟随Nasdaq承压</td></tr><tr><td>09:00-14:00</td><td>日本、韩国市场交易</td><td>中高</td><td>日经225、KOSPI、USD/JPY、USD/KRW</td><td>半导体回调是否延续，日元是否接近160</td></tr><tr><td>20:30</td><td>美国宏观数据窗口，<span class="tag tag-warn">待确认</span></td><td>中</td><td>美债、美元、美股</td><td>是否有数据强化高利率压力</td></tr><tr><td>22:30</td><td>EIA原油库存，<span class="tag tag-warn">待确认</span></td><td>中</td><td>WTI、Brent、能源股</td><td>库存下降会支撑油价，库存增加会压油价</td></tr><tr><td>次日02:00</td><td>FOMC会议纪要</td><td>高</td><td>美债、美元、黄金、Nasdaq</td><td>关注委员对通胀、油价和加息/降息的态度</td></tr><tr><td>美股收盘后</td><td>Nvidia FY2027 Q1财报</td><td>很高</td><td>Nvidia、Nasdaq、半导体、AI链</td><td>看收入、数据中心、毛利率和下一季指引</td></tr></tbody></table></div><div class="beginner-note">小白理解：今天最重要的两个时间点在晚上：FOMC纪要看利率，Nvidia财报看AI。一个管估值，一个管盈利想象。</div></section><section class="section" id="八知识沉淀"><h2><span>9</span>八、知识沉淀</h2><ol><li>一个宏观概念：期限溢价。期限溢价是投资者持有长期债券要求的额外补偿，因为长期债券更怕未来通胀、财政赤字和利率变化。30年期美债升到5.18%，说明市场要求的长期补偿很高。</li><li>一个跨资产传导链条：油价高位 → 通胀预期抬升 → 美债收益率上行 → 美元维持支撑 → 亚洲货币承压 → 港股科技和日韩半导体承压。</li><li>一句面试表达：隔夜市场的核心不是美股单日跌幅，而是油价和长端美债共同抬高折现率，使高估值AI资产必须用更强的盈利和指引来证明自己。</li><li>一个可以写进项目经历的想法：建立“亚洲开盘压力表”，把美国10Y、30Y、DXY、Brent、Nasdaq、USD/CNH、USD/JPY、KOSPI期货放在同一仪表盘，并用阈值自动标注风险等级。</li></ol><div class="beginner-note">小白理解：今天最该记的是“债券市场会给股票定价”。当美债收益率上去，股票市场就会问：你的增长值不值得这么贵？</div></section><section class="section" id="九数据源与可信度说明"><h2><span>10</span>九、数据源与可信度说明</h2><div class="table-wrap"><table><thead><tr><th>数据类型</th><th>指标/内容</th><th>优先数据源</th><th>备用数据源</th><th>本次是否成功获取</th><th>可信度</th><th>备注</th></tr></thead><tbody><tr><td>Yahoo Finance</td><td>美股、商品、汇率</td><td>Yahoo Finance</td><td>AP、Reuters、Investing</td><td>部分<span class="tag tag-missing">未获取</span></td><td>中</td><td>Yahoo部分页面触发429或不可取，使用AP/Reuters转述补充</td></tr><tr><td>东方财富</td><td>A股、港股、人民币</td><td>东方财富</td><td>新浪财经、财联社、Reuters</td><td><span class="tag tag-missing">未获取</span>最新实时</td><td>低</td><td>本地缓存过期，未作为主数据</td></tr><tr><td>FRED</td><td>信用利差、宏观序列</td><td>FRED</td><td>YCharts、Macrotrends</td><td>未直接获取</td><td><span class="tag tag-missing">数据缺失</span></td><td>高收益利差用YCharts滞后值</td></tr><tr><td>美国财政部</td><td>2Y、10Y、30Y美债收益率</td><td>美国财政部</td><td>CNBC、MarketWatch</td><td>成功</td><td>高</td><td>采用2026-05-19官方曲线</td></tr><tr><td>CBOE</td><td>VIX</td><td>CBOE</td><td>Investing、Optionistics</td><td>官方<span class="tag tag-missing">未获取</span></td><td>中低</td><td>VIX使用低置信度备选，需后续复核</td></tr><tr><td>ExchangeRate-API</td><td>汇率</td><td>ExchangeRate-API</td><td>Reuters、Xe、AP</td><td>未使用</td><td>不适用</td><td>按规范不用于真实DXY</td></tr><tr><td>Investing</td><td>Reuters转发、经济日历、LPR</td><td>Investing</td><td>Reuters、Kiplinger</td><td>部分成功</td><td>中高</td><td>中国LPR和亚洲市场新闻有Reuters转述</td></tr><tr><td>Trading Economics</td><td>经济日历、宏观数据</td><td>Trading Economics</td><td>Investing、Kiplinger</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">数据缺失</span></td><td>今日事件日历用Kiplinger/AP/Reuters补充</td></tr><tr><td>Reuters</td><td>全球市场、LPR、亚洲市场</td><td>Reuters</td><td>AP、Investing转载</td><td>部分成功</td><td>高</td><td>多数Reuters通过Investing转载读取</td></tr><tr><td>Bloomberg</td><td>全球市场新闻</td><td>Bloomberg</td><td>Reuters、AP</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">数据缺失</span></td><td>未作为本次来源</td></tr><tr><td>CNBC</td><td>美股、美债、宏观新闻</td><td>CNBC</td><td>AP、Kiplinger</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">数据缺失</span></td><td>未直接使用</td></tr><tr><td>FT</td><td>政经新闻</td><td>FT</td><td>Reuters、AP</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">数据缺失</span></td><td>未直接使用</td></tr><tr><td>WSJ</td><td>政经新闻</td><td>WSJ</td><td>Reuters、AP</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">数据缺失</span></td><td>未直接使用</td></tr><tr><td>财联社</td><td>中国市场快讯</td><td>财联社</td><td>新浪财经、中国新闻网</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">数据缺失</span></td><td>中国数据用中新/新浪官方转述</td></tr><tr><td>华尔街见闻</td><td>中国市场快讯</td><td>华尔街见闻</td><td>财联社、Reuters</td><td><span class="tag tag-missing">未获取</span></td><td><span class="tag tag-missing">数据缺失</span></td><td>未直接使用</td></tr><tr><td>央行/美联储官网</td><td>LPR、FOMC</td><td>PBOC/全国银行间同业拆借中心、Federal Reserve</td><td>中国新闻网、Kiplinger</td><td>部分成功</td><td>高/中</td><td>LPR通过官方转述确认；FOMC纪要为日历事件</td></tr><tr><td>AP</td><td>美股收盘、全球市场综述</td><td>AP</td><td>Reuters</td><td>成功</td><td>高</td><td>用于美股指数、油价和亚洲早盘线索</td></tr><tr><td>本地资料</td><td>知识库、缓存、昨日复盘</td><td>本地文件</td><td>前日报告</td><td>成功</td><td>中</td><td>用于知识沉淀和自动化原因排查，不替代实时行情</td></tr></tbody></table></div><div class="beginner-note">小白理解：这次最可靠的数据是AP美股、美国财政部收益率、中国LPR官方转述。商品和部分汇率存在口径分歧，所以报告里保留了“<span class="tag tag-warn">待确认</span>”和“<span class="tag tag-missing">数据缺失</span>”，这是故意留安全边界，不是偷懒。</div><p>学习用途，不构成投资建议。</p></section>
+        <footer class="footer">学习用途，不构成投资建议。数据缺失和待确认信息请以后续权威来源为准。</footer>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
